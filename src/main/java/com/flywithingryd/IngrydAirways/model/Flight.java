@@ -30,6 +30,8 @@ public class Flight {
     private FlightStatus status;
     @NotBlank
     @NotNull
+    @OneToOne
+    @JoinColumn(name= "aircraft_id")
     private Aircraft aircraft;
     @NotBlank
     @NotNull
@@ -49,6 +51,9 @@ public class Flight {
         this.aircraft = aircraft;
         this.availableSeats = availableSeats;
         this.price = price;
+    }
+
+    public Flight() {
     }
 
     public long getId() {
