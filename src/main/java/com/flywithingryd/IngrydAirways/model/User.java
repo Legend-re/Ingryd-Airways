@@ -27,7 +27,7 @@ public class User {
 
     @Email
     @Column(unique = true)
-    private String username;
+    private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -46,7 +46,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String username,String password, Address address, Role role, Date dob, Gender gender) {
+    public User(String firstName, String lastName, String email, String password, Address address, Role role, Date dob, Gender gender) {
         this.address = address;
         this.dob = dob;
         this.firstName = firstName;
@@ -54,7 +54,7 @@ public class User {
         this.lastName = lastName;
         this.password = password;
         this.role = role;
-        this.username = username;
+        this.email = email;
     }
 
     public Long getId() {
@@ -77,12 +77,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public void setPassword(String password) {
@@ -131,7 +131,7 @@ public class User {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
+                ", username='" + email + '\'' +
                 ", dob=" + dob +
                 ", address=" + address +
                 ", gender=" + gender +
