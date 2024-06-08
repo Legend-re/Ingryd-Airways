@@ -9,12 +9,8 @@ import java.util.List;
 
 @Service
 public class FlightService {
-
-    private final Flight flight;
     private final FlightRepository flightRepository;
-
-    public FlightService(Flight flight, FlightRepository flightRepository){
-        this.flight = flight;
+    public FlightService(FlightRepository flightRepository){
         this.flightRepository = flightRepository;
     }
 
