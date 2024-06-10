@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Flight {
@@ -55,6 +56,9 @@ public class Flight {
 
     @DecimalMin("50.0")
     private double price;
+    @OneToMany
+    @JoinColumn(name = "")
+    private List<Itinerary> itineraryList;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
