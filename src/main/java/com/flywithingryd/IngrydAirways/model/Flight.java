@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Flight {
@@ -39,6 +40,9 @@ public class Flight {
     @NotBlank
     @NotNull
     private double price;
+    @OneToMany
+    @JoinColumn(name = "")
+    private List<Itinerary> itineraryList;
 
 
     public Flight(String flightNumber, String departure, String arrival, LocalDateTime departureTime,

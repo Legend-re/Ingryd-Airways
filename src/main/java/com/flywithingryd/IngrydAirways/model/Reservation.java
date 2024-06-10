@@ -1,69 +1,78 @@
 package com.flywithingryd.IngrydAirways.model;
 
+import com.flywithingryd.IngrydAirways.model.enums.ReservationStatus;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "reservation")
 public class Reservation {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne()
-    @JoinColumn(name ="id")
-    private User user;
-    @OneToOne
-    @JoinColumn(name = "flight_number")
-    private Flight flight;
-    private String passenger;
-    private Date dateTime;
+    private Flight flightId;
+    private List<Passenger> passenger;
+    private Date departureTime;
     private Timestamp timestamp;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private User user;
 
     public Reservation(){};
 
-    public Reservation(int id, User user, Flight flight, String passenger, Date dateTime, Timestamp timestamp) {
+    public Reservation(int id, Flight flightId, List<Passenger> passenger, Date departureTime, Timestamp timestamp, ReservationStatus status) {
         this.id = id;
-        this.user = user;
-        this.flight = flight;
+        this.flightId = flightId;
         this.passenger = passenger;
-        this.dateTime = dateTime;
+        this.departureTime = departureTime;
         this.timestamp = timestamp;
+        this.status = status;
     }
     public int getId(){
         return id;
     }
 
-    public User getUser(){
-        return user;
+    public Flight getFlightId(){
+        return flightId;
     }
-    public Flight getFlight(){
-        return flight;
-    }
-    public String getPassenger(){
+    public List<Passenger> getPassenger(){
         return passenger;
     }
-    public Date getDateTime() {
-        return dateTime;
+    public Date getDepartureTime() {
+        return departureTime;
     }
     public Timestamp getTimestamp(){
         return timestamp;
     }
+    public ReservationStatus getStatus(){
+        return status;
+    }
+
+
     //setters
-    public void setUser(User user){
-        this.user = user;
+    public void setFlightId(Flight flightId){
+        this.flightId = flightId;
     }
-    public void setFlight(Flight flight){
-        this.flight = flight;
-    }
-    public void setPassenger(String passenger){
+    public void setPassenger(List<Passenger> passenger){
         this.passenger = passenger;
+    }
+    public void setStatus(ReservationStatus status){
+        this.status = status;
     }
 
     @Override
     public String toString(){
-        return "id:"+getId() + "User:" + getUser() + "Flight" + getFlight() + "Passenger:"
-                + getPassenger() + "Date:" + getDateTime() + "TimeStamp:" + getTimestamp();
+        return "id:"+getId() + "Flight" + getFlightId() + "Passenger:"
+                + getPassenger() + "Date:" + getDepartureTime() + "TimeStamp:" + getTimestamp()
+                + "ReservationSats:" + getStatus();
     }
+
+    //Epic icon
+    //FWI-38 ReservationStatus Management
 
 }
