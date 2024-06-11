@@ -4,16 +4,12 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
-@Entity(name = "itinerary")
+@Entity
 public class Itinerary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Passenger passenger;
     private Reservation reservation;
 
-    @ManyToOne
-    @JoinColumn()
-    private Flight flight;
 
 }
