@@ -2,6 +2,7 @@ package com.flywithingryd.IngrydAirways.dto.request;
 
 import com.flywithingryd.IngrydAirways.model.Address;
 import com.flywithingryd.IngrydAirways.model.enums.Gender;
+import com.flywithingryd.IngrydAirways.model.enums.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Date;
@@ -16,4 +17,5 @@ public class UserRequest {
     private Date dob;
     private Gender gender;
     private Address address;
+    private Role role;
 }
