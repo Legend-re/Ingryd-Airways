@@ -56,9 +56,6 @@ public class Flight {
 
     @DecimalMin("50.0")
     private double price;
-    @OneToMany
-    @JoinColumn(name = "")
-    private List<Itinerary> itineraryList;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
