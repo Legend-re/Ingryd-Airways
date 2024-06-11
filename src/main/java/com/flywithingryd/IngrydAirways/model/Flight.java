@@ -40,9 +40,6 @@ public class Flight {
     @NotBlank
     @NotNull
     private double price;
-    @OneToMany
-    @JoinColumn(name = "")
-    private List<Itinerary> itineraryList;
 
 
     public Flight(String flightNumber, String departure, String arrival, LocalDateTime departureTime,
