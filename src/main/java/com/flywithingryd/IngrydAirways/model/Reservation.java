@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity(name = "reservation")
 public class Reservation {
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Flight flightId;
