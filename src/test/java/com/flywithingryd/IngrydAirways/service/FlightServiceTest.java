@@ -29,7 +29,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {FlightService.class})
 @ExtendWith(SpringExtension.class)
-class FlightServiceDiffblueTest {
+class FlightServiceTest {
     @MockBean
     private AirportService airportService;
 

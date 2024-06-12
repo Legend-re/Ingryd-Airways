@@ -1,5 +1,6 @@
 package com.flywithingryd.IngrydAirways.controller;
 
+import com.flywithingryd.IngrydAirways.dto.request.UserLoginRequest;
 import com.flywithingryd.IngrydAirways.dto.request.UserRequest;
 import com.flywithingryd.IngrydAirways.dto.response.UserResponse;
 import com.flywithingryd.IngrydAirways.service.UserService;
@@ -62,22 +63,26 @@ class UserControllerTest {
 
     @Test
     void loginUser_Success() throws Exception {
-        String email = "john.doe@example.com";
-        String password = "password";
-
+        // Given
+        UserLoginRequest loginRequest = new UserLoginRequest();
+        loginRequest.setEmail("john.doe@example.com");
+        loginRequest.setPassword("password");
         UserResponse userResponse = new UserResponse();
+        userResponse.setEmail("john.doe@example.com");
 
-        when(userService.loginUser(anyString(), anyString())).thenReturn(userResponse);
 
+        when(userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword())).thenReturn(userResponse);
+
+        // When & Then
         mockMvc.perform(post("/api/users/login")
-                        .param("email", email)
-                        .param("password", password))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value("john.doe@example.com"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-        verify(userService, times(1)).loginUser(anyString(), anyString());
+        verify(userService, times(1)).loginUser(loginRequest.getEmail(), loginRequest.getPassword());
     }
-
     @Test
     void deleteUser_Success() throws Exception {
         String email = "john.doe@example.com";

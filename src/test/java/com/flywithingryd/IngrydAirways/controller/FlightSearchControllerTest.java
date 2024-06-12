@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {FlightSearchController.class})
 @ExtendWith(SpringExtension.class)
-class FlightSearchControllerDiffblueTest {
+class FlightSearchControllerTest {
     @MockBean
     private AirportService airportService;
 

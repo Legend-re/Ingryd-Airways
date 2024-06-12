@@ -4,9 +4,7 @@ import com.flywithingryd.IngrydAirways.model.Address;
 import com.flywithingryd.IngrydAirways.model.enums.Gender;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
-
 
 @Data
 @NoArgsConstructor

@@ -5,31 +5,81 @@ import com.flywithingryd.IngrydAirways.dto.response.UserResponse;
 import com.flywithingryd.IngrydAirways.exception.UserNotFoundException;
 import com.flywithingryd.IngrydAirways.mapper.UserMapper;
 import com.flywithingryd.IngrydAirways.model.User;
-import com.flywithingryd.IngrydAirways.model.enums.Role;
 import com.flywithingryd.IngrydAirways.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+
 @Service
 public class UserService {
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserMapper userMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper;
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    public UserResponse loginUser(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return userMapper.toUserResponse(user);
+        } else {
+            throw new UserNotFoundException("Invalid email or password");
+        }
+    }
+
+
+    public User findUserById(Long id) {
+        return userRepository.findUserById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+    }
+
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+    }
+
+    public boolean userExistsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public List<User> findAllUsers() {
+        List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new UserNotFoundException("No users registered or exist yet");
+        }
+        return users;
+    }
+
+    public void deleteUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+        userRepository.delete(user);
+    }
+
+    public UserResponse updateUser(String email, UserRequest userRequest) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setDob(userRequest.getDob());
+        user.setGender(userRequest.getGender());
+        user.setAddress(userRequest.getAddress());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+
+        User updatedUser = userRepository.save(user);
+        return userMapper.toUserResponse(updatedUser);
     }
 
     public UserResponse registerUser(UserRequest userRequest) {
-        logger.info("Registering user with email: {}", userRequest.getEmail());
         User user = new User();
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
@@ -38,46 +88,8 @@ public class UserService {
         user.setDob(userRequest.getDob());
         user.setGender(userRequest.getGender());
         user.setAddress(userRequest.getAddress());
-        user.setRole(Role.CUSTOMER);
-
         User savedUser = userRepository.save(user);
-        logger.info("User registered successfully with email: {}", userRequest.getEmail());
         return userMapper.toUserResponse(savedUser);
     }
 
-    public UserResponse loginUser(String email, String password) {
-        logger.info("Attempting login for user with email: {}", email);
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
-
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            logger.info("User logged in successfully with email: {}", email);
-            return userMapper.toUserResponse(user);
-        } else {
-            logger.warn("Invalid login attempt for user with email: {}", email);
-            throw new UserNotFoundException("Invalid email or password");
-        }
-    }
-
-    public void deleteUserByEmail(String email) {
-        logger.info("Deleting user with email: {}", email);
-        userRepository.deleteByEmail(email);
-        logger.info("User deleted successfully with email: {}", email);
-    }
-
-    public UserResponse updateUser(String email, UserRequest userRequest) {
-        logger.info("Updating user with email: {}", email);
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
-
-        user.setFirstName(userRequest.getFirstName());
-        user.setLastName(userRequest.getLastName());
-        user.setDob(userRequest.getDob());
-        user.setGender(userRequest.getGender());
-        user.setAddress(userRequest.getAddress());
-
-        User updatedUser = userRepository.save(user);
-        logger.info("User updated successfully with email: {}", email);
-        return userMapper.toUserResponse(updatedUser);
-    }
 }

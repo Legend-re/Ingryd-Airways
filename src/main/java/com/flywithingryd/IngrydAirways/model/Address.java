@@ -13,7 +13,7 @@ public class Address {
 
     private String city;
 
-    private String State;
+    private String state;
 
     private String zipCode;
 
@@ -26,13 +26,21 @@ public class Address {
     public Address(String city, String country, String state, String streetAddress, String zipCode) {
         this.city = city;
         this.country = country;
-        State = state;
+        this.state = state;
         this.streetAddress = streetAddress;
         this.zipCode = zipCode;
     }
 
     public Address() {
     }
+
+    public Address(String street, String city, String state, String zipCode) {
+        this.streetAddress = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
+
 
     public Long getId() {
         return id;
@@ -55,11 +63,11 @@ public class Address {
     }
 
     public String getState() {
-        return State;
+        return state;
     }
 
     public void setState(String state) {
-        State = state;
+        this.state = state;
     }
 
     public String getStreetAddress() {
