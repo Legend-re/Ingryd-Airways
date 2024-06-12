@@ -10,24 +10,27 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 
+import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.USER_CONTROLLER_ENDPOINT;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class UserControllerTest {
+class UserRestControllerTest {
 
     @Mock
     private UserService userService;
 
     @InjectMocks
-    private UserController userController;
+    private UserRestController userRestController;
 
     private MockMvc mockMvc;
 
@@ -36,7 +39,7 @@ class UserControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userRestController).build();
     }
 
     @Test
@@ -51,13 +54,34 @@ class UserControllerTest {
 
         when(userService.registerUser(any(UserRequest.class))).thenReturn(userResponse);
 
-        mockMvc.perform(post("/api/users/register")
+        mockMvc.perform(post(USER_CONTROLLER_ENDPOINT + "/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(userService, times(1)).registerUser(any(UserRequest.class));
+    }
+
+    @Test
+    void registerAdmin_Success() throws Exception {
+        UserRequest userRequest = new UserRequest();
+        userRequest.setFirstName("John");
+        userRequest.setLastName("Doe");
+        userRequest.setEmail("john.doe@example.com");
+        userRequest.setPassword("password");
+
+        UserResponse userResponse = new UserResponse();
+
+        when(userService.registerAdmin(any(UserRequest.class))).thenReturn(userResponse);
+
+        mockMvc.perform(post(USER_CONTROLLER_ENDPOINT + "/registerAdmin")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userRequest)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        verify(userService, times(1)).registerAdmin(any(UserRequest.class));
     }
 
     @Test
@@ -69,7 +93,7 @@ class UserControllerTest {
 
         when(userService.loginUser(anyString(), anyString())).thenReturn(userResponse);
 
-        mockMvc.perform(post("/api/users/login")
+        mockMvc.perform(post(USER_CONTROLLER_ENDPOINT + "/login")
                         .param("email", email)
                         .param("password", password))
                 .andExpect(status().isOk())
@@ -84,7 +108,7 @@ class UserControllerTest {
 
         doNothing().when(userService).deleteUserByEmail(anyString());
 
-        mockMvc.perform(delete("/api/users/{email}", email))
+        mockMvc.perform(delete(USER_CONTROLLER_ENDPOINT + "/{email}", email))
                 .andExpect(status().isNoContent());
 
         verify(userService, times(1)).deleteUserByEmail(anyString());
@@ -104,7 +128,7 @@ class UserControllerTest {
 
         when(userService.updateUser(anyString(), any(UserRequest.class))).thenReturn(userResponse);
 
-        mockMvc.perform(put("/api/users/{email}", email)
+        mockMvc.perform(put(USER_CONTROLLER_ENDPOINT + "/{email}", email)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userRequest)))
                 .andExpect(status().isOk())

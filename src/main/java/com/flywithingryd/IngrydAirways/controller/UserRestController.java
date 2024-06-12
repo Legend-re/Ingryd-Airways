@@ -7,17 +7,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.USER_CONTROLLER_ENDPOINT;
+
 @RestController
-@RequestMapping("/api/users")
-public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+@RequestMapping(USER_CONTROLLER_ENDPOINT)
+public class UserRestController {
+    private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserRestController(UserService userService) {
         this.userService = userService;
     }
 
@@ -26,6 +29,15 @@ public class UserController {
         logger.info("Registering user with email: {}", userRequest.getEmail());
         UserResponse response = userService.registerUser(userRequest);
         logger.info("User registered successfully with email: {}", userRequest.getEmail());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/registerAdmin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponse> registerAdmin(@RequestBody UserRequest userRequest) {
+        logger.info("Registering admin with email: {}", userRequest.getEmail());
+        UserResponse response = userService.registerAdmin(userRequest);
+        logger.info("Admin registered successfully with email: {}", userRequest.getEmail());
         return ResponseEntity.ok(response);
     }
 
