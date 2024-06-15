@@ -4,7 +4,9 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@SuppressWarnings("unused")
 public class SwaggerConfig implements WebMvcConfigurer {
+
     @Bean
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
