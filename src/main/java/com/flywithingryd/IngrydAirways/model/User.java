@@ -19,10 +19,12 @@ public class User {
     @Column
     private Long id;
 
-
+    @NotNull
+    @NotBlank
     private String firstName;
 
-
+    @NotNull
+    @NotBlank
     private String lastName;
 
     @Email

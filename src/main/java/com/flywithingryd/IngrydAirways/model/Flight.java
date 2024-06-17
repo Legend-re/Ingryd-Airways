@@ -10,10 +10,10 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Flight {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +59,10 @@ public class Flight {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime departureDate;
+
+    @OneToMany
+    @Transient
+    private List<Reservation> reservation;
 
     public Flight(String flightNumber, String destinationCode, String originCode,
                   LocalDateTime departureTime, LocalDateTime arrivalTime,
@@ -174,6 +178,14 @@ public class Flight {
 
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
+    }
+
+    public List<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(List<Reservation> reservation) {
+        this.reservation = reservation;
     }
 
     @Override
