@@ -1,7 +1,8 @@
 package com.flywithingryd.IngrydAirways.model.enums;
 
-public enum Reservation {
+public enum ReservationStatus {
     PENDING,
     CONFIRMED,
     CANCELLED
+
 }

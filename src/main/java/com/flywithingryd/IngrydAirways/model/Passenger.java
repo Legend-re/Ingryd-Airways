@@ -8,39 +8,49 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
+import java.util.List;
+
 @Entity
-@Table(name ="passenger" )
 public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @NotNull
     @NotBlank
     private String firstName;
+
     @NotNull
     @NotBlank
     private String lastName;
+
     @Email
     @Column(unique = true)
     private String email;
+
     private Date dob;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
     private int ticketNumber;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @ManyToMany
+    private List<Reservation> reservations;
+
     public Passenger(){};
-    public Passenger(int id, String firstName, String lastName,
-                     String email, Date dob, Address address,
-                     Gender gender, int ticketNumber) {
-        this.id = id;
+
+    public Passenger(String firstName, String lastName, String email, Date dob, Address address, int ticketNumber, Gender gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dob = dob;
         this.address = address;
-        this.gender = gender;
         this.ticketNumber = ticketNumber;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -96,6 +106,18 @@ public class Passenger {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public void setEmail(@Email String email) {
+        this.email = email;
     }
 
     @Override

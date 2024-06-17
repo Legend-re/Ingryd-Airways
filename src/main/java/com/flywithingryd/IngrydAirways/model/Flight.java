@@ -1,9 +1,13 @@
 package com.flywithingryd.IngrydAirways.model;
 
 import com.flywithingryd.IngrydAirways.model.enums.FlightStatus;
+import com.flywithingryd.IngrydAirways.model.enums.SeatClass;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,58 +16,84 @@ import java.util.List;
 public class Flight {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     @Column(unique = true, nullable = false)
     private String flightNumber;
+
     @NotBlank
-    @NotNull
-    private String departure;
+    @Column(name = "destination_airport_code", nullable = false)
+    private String destinationCode;
+
     @NotBlank
-    @NotNull
-    private String arrival;
-    @NotBlank
+    @Column(name = "origin_airport_code", nullable = false)
+    private String originCode;
+
     @NotNull
     private LocalDateTime departureTime;
-    @NotBlank
+
     @NotNull
+    private LocalDateTime arrivalTime;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private FlightStatus status;
-    @NotBlank
+
     @NotNull
-    @OneToOne
-    @JoinColumn(name= "aircraft_id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "aircraft_id", nullable = false)
     private Aircraft aircraft;
-    @NotBlank
+
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private SeatClass travelClass;
+
+    @Min(1)
     private int availableSeats;
-    @NotBlank
-    @NotNull
+
+    @DecimalMin("50.0")
     private double price;
     @OneToMany
     @JoinColumn(name = "")
     private List<Itinerary> itineraryList;
 
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime departureDate;
 
-    public Flight(String flightNumber, String departure, String arrival, LocalDateTime departureTime,
-                  FlightStatus status, Aircraft aircraft, int availableSeats, double price) {
+    @OneToMany
+    @Transient
+    private List<Reservation> reservation;
+
+    public Flight(String flightNumber, String destinationCode, String originCode,
+                  LocalDateTime departureTime, LocalDateTime arrivalTime,
+                  FlightStatus status, Aircraft aircraft, SeatClass travelClass,
+                  int availableSeats, double price, LocalDateTime departureDate) {
         this.flightNumber = flightNumber;
-        this.departure = departure;
-        this.arrival = arrival;
+        this.destinationCode = destinationCode;
+        this.originCode = originCode;
         this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
         this.status = status;
         this.aircraft = aircraft;
+        this.travelClass = travelClass;
         this.availableSeats = availableSeats;
         this.price = price;
+        this.departureDate = departureDate;
     }
 
     public Flight() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFlightNumber() {
         return flightNumber;
@@ -73,20 +103,20 @@ public class Flight {
         this.flightNumber = flightNumber;
     }
 
-    public String getDeparture() {
-        return departure;
+    public String getDestinationCode() {
+        return destinationCode;
     }
 
-    public void setDeparture(String departure) {
-        this.departure = departure;
+    public void setDestinationCode(String destinationCode) {
+        this.destinationCode = destinationCode;
     }
 
-    public String getArrival() {
-        return arrival;
+    public String getOriginCode() {
+        return originCode;
     }
 
-    public void setArrival(String arrival) {
-        this.arrival = arrival;
+    public void setOriginCode(String originCode) {
+        this.originCode = originCode;
     }
 
     public LocalDateTime getDepartureTime() {
@@ -95,6 +125,14 @@ public class Flight {
 
     public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
+    }
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
     public FlightStatus getStatus() {
@@ -113,6 +151,14 @@ public class Flight {
         this.aircraft = aircraft;
     }
 
+    public SeatClass getTravelClass() {
+        return travelClass;
+    }
+
+    public void setTravelClass(SeatClass travelClass) {
+        this.travelClass = travelClass;
+    }
+
     public int getAvailableSeats() {
         return availableSeats;
     }
@@ -129,18 +175,37 @@ public class Flight {
         this.price = price;
     }
 
+    public LocalDateTime getDepartureDate() {
+        return departureDate;
+    }
+
+    public void setDepartureDate(LocalDateTime departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public List<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(List<Reservation> reservation) {
+        this.reservation = reservation;
+    }
 
     @Override
     public String toString() {
         return "Flight{" +
-                "flightNumber='" + flightNumber + '\'' +
-                ", departure='" + departure + '\'' +
-                ", arrival='" + arrival + '\'' +
+                "id=" + id +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", destinationCode='" + destinationCode + '\'' +
+                ", originCode='" + originCode + '\'' +
                 ", departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
                 ", status=" + status +
                 ", aircraft=" + aircraft +
+                ", travelClass=" + travelClass +
                 ", availableSeats=" + availableSeats +
                 ", price=" + price +
+                ", departureDate=" + departureDate +
                 '}';
     }
 }

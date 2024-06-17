@@ -2,31 +2,42 @@ package com.flywithingryd.IngrydAirways.model;
 
 import com.flywithingryd.IngrydAirways.model.enums.AircraftStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "aircraft", uniqueConstraints = {@UniqueConstraint
+        (columnNames = "registration_number")})
 public class Aircraft {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "aircraft_id")
     private long id;
+
     private String model;
+
     private int yearManufactured;
+
     @NotBlank
     @Column(unique = true, nullable = false)
     private String registrationNumber;
+
     @Enumerated(EnumType.STRING)
     private AircraftStatus status;
-    @NotBlank
+
     @NotNull
     private int seatCapacity;
 
     @NotNull
-    @NotBlank
+    @Min(1)
+    @Max(50)
     private int businessClassSeats;
+
     @NotNull
-    @NotBlank
+    @Min(1)
     private int economyClassSeats;
 
     public Aircraft() {
@@ -100,5 +111,32 @@ public class Aircraft {
 
     public void setEconomyClassSeats(int economyClassSeats) {
         this.economyClassSeats = economyClassSeats;
+    }
+
+    @OneToOne(mappedBy = "aircraft")
+//    @OneToOne(mappedBy = "aircraft", optional = false)
+    private Flight flight;
+
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
+    @Override
+    public String toString() {
+        return "Aircraft{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                ", yearManufactured=" + yearManufactured +
+                ", registrationNumber='" + registrationNumber + '\'' +
+                ", status=" + status +
+                ", seatCapacity=" + seatCapacity +
+                ", businessClassSeats=" + businessClassSeats +
+                ", economyClassSeats=" + economyClassSeats +
+                ", flight=" + flight +
+                '}';
     }
 }
