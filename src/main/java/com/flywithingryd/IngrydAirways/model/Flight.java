@@ -61,6 +61,11 @@ public class Flight {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime departureDate;
 
+    @OneToMany
+    @Transient
+    private List<Reservation> reservation;
+
+
     public Flight(String flightNumber, String destinationCode, String originCode,
                   LocalDateTime departureTime, LocalDateTime arrivalTime,
                   FlightStatus status, Aircraft aircraft, SeatClass travelClass,
@@ -175,6 +180,14 @@ public class Flight {
 
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
+    }
+
+    public List<Reservation> getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(List<Reservation> reservation) {
+        this.reservation = reservation;
     }
 
     @Override

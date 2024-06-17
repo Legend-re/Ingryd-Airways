@@ -34,7 +34,7 @@ public class User {
 
     private Date dob;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Address address;
 
     @Enumerated(EnumType.STRING)
