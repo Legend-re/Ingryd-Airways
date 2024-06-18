@@ -22,7 +22,7 @@ public class AircraftService {
 
     private final AircraftRepository aircraftRepository;
 
-    private String generateNewRegistrationNumber() {
+    String generateNewRegistrationNumber() {
         StringBuilder registrationNumber = new StringBuilder(PREFIX);
 
         int randomNumber = new Random().nextInt(999) + 1;
