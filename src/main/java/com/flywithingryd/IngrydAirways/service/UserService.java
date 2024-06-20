@@ -8,6 +8,7 @@ import com.flywithingryd.IngrydAirways.exception.WrongCredentialsException;
 import com.flywithingryd.IngrydAirways.mapper.UserMapper;
 import com.flywithingryd.IngrydAirways.model.User;
 import com.flywithingryd.IngrydAirways.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final MessageService messageService;
 
 @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, MessageService messageService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
+        this.messageService = messageService;
     }
 
-    public UserResponse registerUser(UserRequest userRequest) {
+    public UserResponse registerUser(UserRequest userRequest) throws MessagingException {
         logger.info("Registering user with email: {}", userRequest.getEmail());
         User user = new User();
         user.setFirstName(userRequest.getFirstName());
@@ -46,12 +49,14 @@ public class UserService {
         user.setAddress(userRequest.getAddress());
         user.setRole(CUSTOMER);
 
+        messageService.registrationNotification(userRequest.getEmail(), userRequest.getFirstName());
+
         User savedUser = userRepository.save(user);
         logger.info("User registered successfully with email: {}", userRequest.getEmail());
         return userMapper.toUserResponse(savedUser);
     }
 
-    public UserResponse registerAdmin(UserRequest userRequest) {
+    public UserResponse registerAdmin(UserRequest userRequest){
         logger.info("Processing register admin with email: {}", userRequest.getEmail());
 
         Optional<User> existingUser = userRepository.findByEmail(userRequest.getEmail());
@@ -66,6 +71,10 @@ public class UserService {
         } else {
             return processRegisterNewAdmin(userRequest);
         }
+
+//        messageService.adminRegistrationNotification(userRequest.getEmail(), userRequest.getFirstName());
+
+
     }
 
 
@@ -87,6 +96,8 @@ public class UserService {
         user.setGender(userRequest.getGender());
         user.setAddress(userRequest.getAddress());
         user.setRole(CUSTOMER);
+
+
 
         User savedUser = userRepository.save(user);
         logger.info("Admin registered successfully with email: {}", userRequest.getEmail());
