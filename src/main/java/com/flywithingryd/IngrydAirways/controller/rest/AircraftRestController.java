@@ -1,4 +1,4 @@
-package com.flywithingryd.IngrydAirways.controller;
+package com.flywithingryd.IngrydAirways.controller.rest;
 
 import com.flywithingryd.IngrydAirways.dto.request.AircraftRequest;
 import com.flywithingryd.IngrydAirways.service.AircraftService;
