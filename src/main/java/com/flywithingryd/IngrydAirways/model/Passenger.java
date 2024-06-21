@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Passenger {
@@ -125,5 +126,17 @@ public class Passenger {
         return "id:"+getId() + "FirstName:" + getFirstName() + "LastName" + getLastName()
                 + "Email" + getEmail() + "Ticket_ID:" + getTicketNumber() + "Gender:"+getId()
                 + "Address:" + getAddress() + "DOB" + getDob() ;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Passenger that)) return false;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
