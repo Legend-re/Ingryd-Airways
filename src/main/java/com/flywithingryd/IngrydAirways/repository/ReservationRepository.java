@@ -2,6 +2,7 @@ package com.flywithingryd.IngrydAirways.repository;
 
 import com.flywithingryd.IngrydAirways.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
@@ -12,3 +13,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
    void deleteByReservationNumber(String reservationNumber);
 }
+
+
+
+
+
+
+
+

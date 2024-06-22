@@ -1,4 +1,4 @@
-package com.flywithingryd.IngrydAirways.controller;
+package com.flywithingryd.IngrydAirways.controller.rest;
 
 import com.flywithingryd.IngrydAirways.dto.request.FlightSearchRequest;
 import com.flywithingryd.IngrydAirways.dto.response.FlightSearchResponse;
@@ -26,17 +26,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.MANAGE_FLIGHT_CONTROLLER_ENDPOINT;
+
 @RestController
-@RequestMapping("/api/flights")
+@RequestMapping(MANAGE_FLIGHT_CONTROLLER_ENDPOINT)
 @Tag(name = "Flight Management", description = "API for managing and searching flights")
-public class FlightController {
+public class FlightRestController {
 
     private final FlightService flightService;
     private final AirportService airportService;
-    private static final Logger logger = LoggerFactory.getLogger(FlightController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FlightRestController.class);
 
     @Autowired
-    public FlightController(FlightService flightService, AirportService airportService) {
+    public FlightRestController(FlightService flightService, AirportService airportService) {
         this.flightService = flightService;
         this.airportService = airportService;
     }

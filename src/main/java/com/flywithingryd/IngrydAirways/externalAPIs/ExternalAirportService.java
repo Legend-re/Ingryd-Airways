@@ -11,15 +11,18 @@ import org.springframework.web.client.RestTemplate;
 public class ExternalAirportService {
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${api.base.url:#{null}}")
+    @Value("${api.base.url}")
     private String apiUrlBase;
+
+    @Value("${api.token}")
+    private String apiToken;
 
     public String getAirportName(String code) {
         if (apiUrlBase == null) {
             return "Unknown Airport";
         }
 
-        String url = String.format("%s/airport/%s", apiUrlBase, code);
+        String url = String.format("%s/airport/%s?apiToken=%s", apiUrlBase, code, apiToken);
         try {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
             return response.getBody();

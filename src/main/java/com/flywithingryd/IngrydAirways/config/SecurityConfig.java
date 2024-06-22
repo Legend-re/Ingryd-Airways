@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.USER_CONTROLLER_ENDPOINT;
+import static com.flywithingryd.IngrydAirways.model.enums.Role.ADMIN;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -29,8 +32,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-                        .requestMatchers("/api/users/**").authenticated()
+                        .requestMatchers(USER_CONTROLLER_ENDPOINT + "/register", USER_CONTROLLER_ENDPOINT + "/login").permitAll()
+                        .requestMatchers(USER_CONTROLLER_ENDPOINT + "/registerAdmin").hasRole(ADMIN.toString())
+                        .requestMatchers(USER_CONTROLLER_ENDPOINT + "/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session

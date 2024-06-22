@@ -14,7 +14,6 @@ public class Aircraft {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "aircraft_id")
     private long id;
 
     private String model;

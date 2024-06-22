@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "reservation")
 public class Reservation {
@@ -16,19 +17,20 @@ public class Reservation {
     @Column(unique = true, nullable = false)
     private String reservationNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Flight flight;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Passenger> passenger;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date departureTime;
     private Timestamp timestamp;
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    @OneToOne
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Transient
     private Itinerary itineraryId;
 
@@ -104,4 +106,14 @@ public class Reservation {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reservation that)) return false;
+        return id == that.id;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
