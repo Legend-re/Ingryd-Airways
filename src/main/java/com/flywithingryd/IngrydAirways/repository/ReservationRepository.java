@@ -11,13 +11,6 @@ import java.util.Optional;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer>, JpaSpecificationExecutor<Reservation> {
 
+   Reservation findByReservationNumber(String reservationNumber);
    void deleteByReservationNumber(String reservationNumber);
 }
-
-
-
-
-
-
-
-

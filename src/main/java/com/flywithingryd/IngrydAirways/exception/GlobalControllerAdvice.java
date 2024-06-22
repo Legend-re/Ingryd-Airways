@@ -109,15 +109,6 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
-
-//    @ExceptionHandler(Exception.class)
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
-//        logger.error("Internal server error: {}", ex.getMessage(), ex);
-//        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred. Please try again later.");
-//    }
-
     private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus httpStatus, String message) {
         return ResponseEntity.status(httpStatus).body(new ErrorResponse(message));
     }
