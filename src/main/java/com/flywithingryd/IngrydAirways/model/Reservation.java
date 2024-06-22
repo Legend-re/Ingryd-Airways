@@ -86,8 +86,8 @@ public class Reservation {
     public void setPassenger(List<Passenger> passenger){
         this.passenger = passenger;
     }
-    public void setStatus(ReservationStatus status){
-        this.status = status;
+    public ReservationStatus setStatus(ReservationStatus status){
+        return  this.status = status;
     }
     public void setItineraryId(Itinerary itineraryId) {
         this.itineraryId = itineraryId;
