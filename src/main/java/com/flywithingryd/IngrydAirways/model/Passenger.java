@@ -39,8 +39,8 @@ public class Passenger {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToMany
-    private List<Reservation> reservations;
+    @ManyToOne
+    private Reservation reservations;
 
     public Passenger(){};
 
@@ -109,11 +109,11 @@ public class Passenger {
         this.gender = gender;
     }
 
-    public List<Reservation> getReservations() {
+    public Reservation getReservations() {
         return reservations;
     }
 
-    public void setReservations(List<Reservation> reservations) {
+    public void setReservations(Reservation reservations) {
         this.reservations = reservations;
     }
 

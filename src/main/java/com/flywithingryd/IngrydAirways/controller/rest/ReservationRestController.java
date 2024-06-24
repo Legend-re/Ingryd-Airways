@@ -1,4 +1,4 @@
-package com.flywithingryd.IngrydAirways.controller;
+package com.flywithingryd.IngrydAirways.controller.rest;
 
 import com.flywithingryd.IngrydAirways.model.Passenger;
 import com.flywithingryd.IngrydAirways.model.Reservation;
@@ -24,7 +24,7 @@ public class ReservationRestController {
     }
 
     @PostMapping("/created")
-    private ResponseEntity<List<Reservation>> saveReservation(@RequestBody List<Passenger> passengers) throws MessagingException {
+    private ResponseEntity<Reservation> saveReservation(@RequestBody List<Passenger> passengers) throws MessagingException {
         return ResponseEntity.ok(reservationService.createReservation(passengers));
     }
 
