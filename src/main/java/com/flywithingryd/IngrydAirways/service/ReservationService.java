@@ -1,9 +1,6 @@
 package com.flywithingryd.IngrydAirways.service;
 
-import com.flywithingryd.IngrydAirways.dto.request.UserRequest;
 import com.flywithingryd.IngrydAirways.exception.ReservationNotFoundException;
-import com.flywithingryd.IngrydAirways.mapper.UserMapper;
-import com.flywithingryd.IngrydAirways.model.Flight;
 import com.flywithingryd.IngrydAirways.model.Passenger;
 import com.flywithingryd.IngrydAirways.model.Reservation;
 import com.flywithingryd.IngrydAirways.model.enums.ReservationStatus;
@@ -11,7 +8,6 @@ import com.flywithingryd.IngrydAirways.repository.ReservationRepository;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -105,11 +101,12 @@ public class ReservationService {
     }
 
     //Cancel Reservation
-    public void deleteReservationByReservationNum( String deleteReservation){
-       logger.info("Cancelling Reservation, please wait... {}", deleteReservation);
-       reservationRepository.deleteByReservationNumber(deleteReservation);
-       logger.info("Your Reservation is now Canceled {}", deleteReservation);
-
+    public void cancelReservationByReservationNum(String reservationNumber, Reservation cancelReservation){
+        Reservation user = reservationRepository.findByReservationNumber(reservationNumber);
+       logger.info("Cancelling Reservation, please wait... {}", cancelReservation);
+        user.setStatus(ReservationStatus.CANCELLED);
+       logger.info("Your Reservation is now Canceled {}", cancelReservation);
+        reservationRepository.save(user);
     }
 
     //find ReservationByID

@@ -33,8 +33,8 @@ public class Passenger {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-
-    private int ticketNumber;
+    @Column(unique = true, nullable = false)
+    private String ticketNumber;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -44,7 +44,7 @@ public class Passenger {
 
     public Passenger(){};
 
-    public Passenger(String firstName, String lastName, String email, Date dob, Address address, int ticketNumber, Gender gender) {
+    public Passenger(String firstName, String lastName, String email, Date dob, Address address, String ticketNumber, Gender gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -74,11 +74,11 @@ public class Passenger {
         this.lastName = lastName;
     }
 
-    public int getTicketNumber() {
+    public String getTicketNumber() {
         return ticketNumber;
     }
 
-    public void setTicketNumber(int ticketNumber) {
+    public void setTicketNumber(String ticketNumber) {
         this.ticketNumber = ticketNumber;
     }
 

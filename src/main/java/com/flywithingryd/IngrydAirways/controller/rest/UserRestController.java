@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,9 @@ public class UserRestController {
             @ApiResponse(responseCode = "400", description = "Invalid input",
                     content = @Content)
     })
-    public ResponseEntity<UserResponse> registerUser(
+    public ResponseEntity<UserResponse> registerUser  (
             @Parameter(description = "User registration details", required = true)
-            @RequestBody UserRequest userRequest) {
+            @RequestBody UserRequest userRequest) throws MessagingException {
         logger.info("Registering user with email: {}", userRequest.getEmail());
         UserResponse response = userService.registerUser(userRequest);
         logger.info("User registered successfully with email: {}", userRequest.getEmail());
