@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.RESERVATION_CONTROLLER_ENDPOINT;
+
 @RestController
-@RequestMapping("/api/reservation")
+@RequestMapping(RESERVATION_CONTROLLER_ENDPOINT)
 public class ReservationRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationRestController.class);

@@ -1,6 +1,7 @@
 package com.flywithingryd.IngrydAirways.service;
 
 import com.flywithingryd.IngrydAirways.dto.request.AircraftRequest;
+import com.flywithingryd.IngrydAirways.exception.AircraftNotFoundException;
 import com.flywithingryd.IngrydAirways.model.Aircraft;
 import com.flywithingryd.IngrydAirways.model.enums.AircraftStatus;
 import com.flywithingryd.IngrydAirways.repository.AircraftRepository;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -36,7 +38,7 @@ public class AircraftService {
         Aircraft aircraft = new Aircraft();
         String regNumber;
 
-        do{
+        do {
             regNumber = generateNewRegistrationNumber();
         }
         while (aircraftRepository.existsByRegistrationNumber(regNumber));
@@ -51,5 +53,25 @@ public class AircraftService {
 
         aircraftRepository.save(aircraft);
         logger.info("Successfully created aircraft {}", regNumber);
+    }
+
+    public Aircraft getAircraft(String regNumber) {
+        logger.info("Processing get Aircraft by Registration Number");
+        return aircraftRepository.findByRegistrationNumber(regNumber)
+                .orElseThrow(() -> new AircraftNotFoundException("Aircraft not found with registration number: " + regNumber));
+    }
+
+    public List<Aircraft> getAllAircraft(){
+        logger.info("Processing get All existing Aircraft");
+        return  aircraftRepository.findAll();
+    }
+
+    public void toggleAircraftStatus(String regNumber, String status){
+        logger.info("Processing change Aircraft Status");
+
+        Aircraft findAircraft = getAircraft(regNumber);
+        findAircraft.setStatus(AircraftStatus.valueOf(status));
+        aircraftRepository.save(findAircraft);
+        logger.info("Successfully changed Aircraft Status");
     }
 }
