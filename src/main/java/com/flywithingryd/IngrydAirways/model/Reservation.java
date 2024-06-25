@@ -103,6 +103,7 @@ public class Reservation {
                 ", departureTime=" + departureTime +
                 ", timestamp=" + timestamp +
                 ", status=" + status +
+                ", status=" + status +
                 '}';
     }
 

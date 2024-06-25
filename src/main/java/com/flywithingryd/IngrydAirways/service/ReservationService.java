@@ -1,17 +1,14 @@
 package com.flywithingryd.IngrydAirways.service;
 
-import com.flywithingryd.IngrydAirways.dto.request.UserRequest;
 import com.flywithingryd.IngrydAirways.exception.ReservationNotFoundException;
-import com.flywithingryd.IngrydAirways.mapper.UserMapper;
-import com.flywithingryd.IngrydAirways.model.Flight;
 import com.flywithingryd.IngrydAirways.model.Passenger;
 import com.flywithingryd.IngrydAirways.model.Reservation;
 import com.flywithingryd.IngrydAirways.model.enums.ReservationStatus;
 import com.flywithingryd.IngrydAirways.repository.ReservationRepository;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -32,35 +29,38 @@ public class ReservationService {
     }
 
     //Reservation Logic
-    public List<Reservation> createReservation(List<Passenger> passengers ) throws MessagingException {
+    @Transactional
+    public Reservation createReservation(List<Passenger> passengers) throws MessagingException {
         String reservationId = generateReservationId();
 
-        List<Reservation> registeredReservations = new ArrayList<>();
+        Reservation reservation = new Reservation();
+        reservation.setReservationNumber(reservationId);
 
 
+        List<Passenger> savedPassengers = new ArrayList<>();
         for (Passenger passenger : passengers) {
             String ticketId = generateTicketId();
             passenger.setTicketNumber(ticketId);
-
-            String email = passenger.getEmail();
-            String firstName = passenger.getFirstName();
-
-            Reservation reservation = new Reservation();
-            reservation.setReservationNumber(reservationId);
-            reservation.setPassenger(List.of(passenger));
-
-            String status = String.valueOf(reservation.setStatus(ReservationStatus.PENDING));
-
-            // Save the reservation directly to the repository
-            Reservation savedReservation = reservationRepository.save(reservation);
-            registeredReservations.add(savedReservation);
-
-            messageService.reservationNotification(firstName, email, reservationId, status);
-
+            passenger.setReservations(reservation);
+            savedPassengers.add(passenger);
         }
 
-        return registeredReservations;
+
+        reservation.setPassenger(savedPassengers);
+        reservation.setStatus(ReservationStatus.PENDING);
+
+
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        for (Passenger passenger : savedPassengers) {
+            String email = passenger.getEmail();
+            String firstName = passenger.getFirstName();
+            messageService.reservationNotification(firstName, email, reservationId, reservation.getStatus().toString());
+        }
+
+        return savedReservation;
     }
+
 
     // Generate a unique reservation ID
     private String generateReservationId() {
@@ -105,11 +105,12 @@ public class ReservationService {
     }
 
     //Cancel Reservation
-    public void deleteReservationByReservationNum( String deleteReservation){
-       logger.info("Cancelling Reservation, please wait... {}", deleteReservation);
-       reservationRepository.deleteByReservationNumber(deleteReservation);
-       logger.info("Your Reservation is now Canceled {}", deleteReservation);
-
+    public void cancelReservationByReservationNum(String reservationNumber, Reservation cancelReservation){
+        Reservation user = reservationRepository.findByReservationNumber(reservationNumber);
+       logger.info("Cancelling Reservation, please wait... {}", cancelReservation);
+        user.setStatus(ReservationStatus.CANCELLED);
+       logger.info("Your Reservation is now Canceled {}", cancelReservation);
+        reservationRepository.save(user);
     }
 
     //find ReservationByID
