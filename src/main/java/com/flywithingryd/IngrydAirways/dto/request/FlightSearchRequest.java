@@ -19,7 +19,6 @@ public class FlightSearchRequest {
     private String destination;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Travel Class must not be null")
     private SeatClass travelClass;
 
     @Min(value = 1, message = "Number of passengers must be at least 1")

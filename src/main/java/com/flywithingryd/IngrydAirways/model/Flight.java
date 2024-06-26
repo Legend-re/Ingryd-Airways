@@ -1,16 +1,18 @@
 package com.flywithingryd.IngrydAirways.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flywithingryd.IngrydAirways.model.enums.FlightStatus;
 import com.flywithingryd.IngrydAirways.model.enums.SeatClass;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Flight {
@@ -41,36 +43,34 @@ public class Flight {
     @Enumerated(EnumType.STRING)
     private FlightStatus status;
 
-    @NotNull
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "aircraft_id", nullable = false)
     private Aircraft aircraft;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private SeatClass travelClass;
 
-    @Min(1)
     private int availableSeats;
 
     @DecimalMin("50.0")
     private double price;
+
     @OneToMany
     @JoinColumn(name = "")
+    @JsonIgnore
     private List<Itinerary> itineraryList;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime departureDate;
+    private LocalDate departureDate;
 
-    @OneToMany
-    @Transient
-    private List<Reservation> reservation;
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Reservation> reservation;
 
     public Flight(String flightNumber, String destinationCode, String originCode,
                   LocalDateTime departureTime, LocalDateTime arrivalTime,
                   FlightStatus status, Aircraft aircraft, SeatClass travelClass,
-                  int availableSeats, double price, LocalDateTime departureDate) {
+                  int availableSeats, double price, LocalDate departureDate) {
         this.flightNumber = flightNumber;
         this.destinationCode = destinationCode;
         this.originCode = originCode;
@@ -175,19 +175,19 @@ public class Flight {
         this.price = price;
     }
 
-    public LocalDateTime getDepartureDate() {
+    public LocalDate getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(LocalDateTime departureDate) {
+    public void setDepartureDate(LocalDate departureDate) {
         this.departureDate = departureDate;
     }
 
-    public List<Reservation> getReservation() {
+    public Set<Reservation> getReservation() {
         return reservation;
     }
 
-    public void setReservation(List<Reservation> reservation) {
+    public void setReservation(Set<Reservation> reservation) {
         this.reservation = reservation;
     }
 

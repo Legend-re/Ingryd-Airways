@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class FlightSearchResponse {
     private String flightNumber;
-    private LocalDateTime departureDate;
+    private LocalDate departureDate;
     private LocalDateTime arrivalTime;
     private LocalDateTime departureTime;
     private double price;
