@@ -1,5 +1,6 @@
 package com.flywithingryd.IngrydAirways.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.flywithingryd.IngrydAirways.model.enums.AircraftStatus;
@@ -117,7 +118,7 @@ public class Aircraft {
 
     @OneToOne(mappedBy = "aircraft")
     @JoinColumn(name = "flight_id", nullable = false)
-    @JsonIgnore
+    @JsonBackReference
     private Flight flight;
 
     public Flight getFlight() {
@@ -139,7 +140,6 @@ public class Aircraft {
                 ", seatCapacity=" + seatCapacity +
                 ", businessClassSeats=" + businessClassSeats +
                 ", economyClassSeats=" + economyClassSeats +
-                ", flight=" + flight +
                 '}';
     }
 }

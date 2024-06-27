@@ -1,6 +1,8 @@
 package com.flywithingryd.IngrydAirways.controller.rest;
 
 import com.flywithingryd.IngrydAirways.dto.request.FlightRequest;
+import com.flywithingryd.IngrydAirways.dto.request.FlightSearchRequest;
+import com.flywithingryd.IngrydAirways.dto.response.FlightSearchResponse;
 import com.flywithingryd.IngrydAirways.exception.FlightNotFoundException;
 import com.flywithingryd.IngrydAirways.model.Flight;
 import com.flywithingryd.IngrydAirways.service.AirportService;
@@ -12,9 +14,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +35,11 @@ import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.MANAGE_FLI
 public class FlightRestController {
 
     private final FlightService flightService;
-    private final AirportService airportService;
     private static final Logger logger = LoggerFactory.getLogger(FlightRestController.class);
 
     @Autowired
-    public FlightRestController(FlightService flightService, AirportService airportService) {
+    public FlightRestController(FlightService flightService) {
         this.flightService = flightService;
-        this.airportService = airportService;
     }
 
     @PostMapping("/search")
@@ -46,13 +50,13 @@ public class FlightRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Flight search successful",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Flight.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid origin code",
+                            schema = @Schema(implementation = FlightSearchResponse.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid origin or destination code",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Flights not found",
                     content = @Content)
     })
-    public ResponseEntity<List<Flight>> searchFlights(@RequestParam Double origin) {
+    public ResponseEntity<List<FlightSearchResponse>> searchFlights(@RequestParam String origin) {
 
         logger.info("Searching flights from {} to ...", origin);
 //        if (originName.equals("Unknown Airport") || destinationName.equals("Unknown Airport")) {
@@ -73,8 +77,8 @@ public class FlightRestController {
 //            flightResponse.setDestinationAirportName(destinationName);
 //        });
 //
-//        logger.info("Flight search completed successfully.");
-        return ResponseEntity.ok(flightService.searchFlightByOrigin(origin));
+        logger.info("Flight search completed successfully.");
+        return ResponseEntity.ok(flightService.searchFlights(origin));
     }
 
     @PostMapping

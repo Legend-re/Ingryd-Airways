@@ -73,8 +73,6 @@ public class UserService {
         }
 
 //        messageService.adminRegistrationNotification(userRequest.getEmail(), userRequest.getFirstName());
-
-
     }
 
 
