@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingryd Airways</title>
+    <link rel="stylesheet" th:href="@{/css/reservation.css}" type="text/css">
+    <link href="/static/css/reservation.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/psgStyle.css}" type="text/css">
+    <link href="/static/css/psgStyle.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<style th:inline="text">
+    .welcome-box{
+        background: url([[@{/assets/images/banner1.jpg}]]);
+        background-size: cover;
+
+    }
+</style>
+
+<section class="navbar">
+
+    <div class="header-a">
+        <div class="logo-bar">
+            <div class="hamburger">
+                <div class="line" id="ln"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="side-bar">
+                    <div class="shadow"></div>
+
+                </div>
+                <div class="non-click"></div>
+            </div>
+
+            <div class="logo"><img src="/static/assets/images/ingrydLogo2.jpg" th:src="@{/assets/images/ingrydLogo2.jpg}" /></div>
+            <h2>Airways</h2>
+        </div>
+        <div class="login-bar">
+            <div class="ico-pln"><img src="/static/assets/ico2/search.png" th:src="@{/assets/ico2/search.png}"/></div>
+            <div class="login-bar-col">
+                <ul>
+                    <li class="login-sm active"><p><img src="/static/assets/ico2/avatar.png" th:src="@{/assets/ico2/avatar.png}"/>&nbsp Login</p>
+                        <div class="sub-menu">
+                            <div class="log-btn">User</div>
+
+                            <div class="log-btn">Admin</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="signup-bar">
+
+            <div class="signup-sm">
+                <p><img src="/static/assets/ico2/add-user.png" th:src="@{/assets/ico2/add-user.png}"/>&nbsp Sign up </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+<section class="headers">
+    <div class="success">
+        <small>You have successfully checked out your reservation!</small>
+    </div>
+
+
+</section>
+
+<section class="body-con">
+    <div class="mid-con">
+        <div class="ticket-con">
+            <div class="ticket">
+                <div class="data-md">
+                    <div class="resv-id lbl"><span>Reservation ID:</span><p></p></div>
+                    <div class="tikt-id lbl"><span>Ticket ID:</span><p></p></div>
+
+                </div>
+                <div class="data-md"></div>
+                <div class="data-md"></div>
+                <div class="data-md"></div>
+                <div class="data-md"></div>
+                <div class="data-md"></div>
+                <div class="data-md"></div>
+            </div>
+        </div>
+        <div class="div-action">
+            <div class="col-lg-b">
+                <input type="button" value="Cancel" class="btn-red">
+            </div>
+            <div class="col-lg-b">
+                <input type="button" value="Pay VISA" class="btn-blue">
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+<!--<div class="feedback">Feedback</div>-->
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9k/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+
+
+<script th:src="@{/js/index.js}" ></script>
+<script src="/static/js/index.js" ></script>
+
+<script th:src="@{/js/flight-API.js}" ></script>
+<script src="/static/js/flight-API.js" ></script>
+
+</body>
+</html>

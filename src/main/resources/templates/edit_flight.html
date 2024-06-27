@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingryd Airways</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}" type="text/css">
+    <link href="/static/css/admin.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/psgStyle.css}" type="text/css">
+    <link href="/static/css/psgStyle.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<style th:inline="text">
+    .welcome-box{
+        background: url([[@{/assets/images/banner1.jpg}]]);
+        background-size: cover;
+
+    }
+</style>
+
+<section class="navbar">
+
+    <div class="header-a">
+        <div class="logo-bar">
+            <div class="hamburger">
+                <div class="line" id="ln"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="side-bar">
+                    <div class="shadow"></div>
+
+                </div>
+                <div class="non-click"></div>
+            </div>
+
+            <div class="logo"><img src="/static/assets/images/ingrydLogo2.jpg" th:src="@{/assets/images/ingrydLogo2.jpg}" /></div>
+            <h2>Airways</h2>
+        </div>
+        <div class="login-bar">
+            <div class="ico-pln"><img src="/static/assets/ico2/search.png" th:src="@{/assets/ico2/search.png}"/></div>
+            <div class="login-bar-col">
+                <ul>
+                    <li class="login-sm active"><p><img src="/static/assets/ico2/avatar.png" th:src="@{/assets/ico2/avatar.png}"/>&nbsp Login</p>
+                        <div class="sub-menu">
+                            <div class="log-btn">User</div>
+
+                            <div class="log-btn">Admin</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="signup-bar">
+
+            <div class="signup-sm">
+                <p><img src="/static/assets/ico2/add-user.png" th:src="@{/assets/ico2/add-user.png}"/>&nbsp Sign up </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+<section class="headers">
+    <h1>ADMIN</h1>
+
+</section>
+
+<section class="split-con">
+
+    <div class="left-side">
+        <div class="list-box">
+            <h3>Add New Admin</h3>
+
+        </div>
+        <div class="list-box">
+            <h3>Create Flight</h3>
+
+        </div>
+        <div class="list-box">
+            <h3>Create Aircraft</h3>
+
+
+        </div>
+        <div class="list-box">
+            <h3>Logout</h3>
+
+
+        </div>
+
+    </div>
+    <div class="right-side">
+        <div class="form-display">
+            <div class="col-lg-c-a b-con">
+                <div class="title-con">
+                    <div class="title-con-inner">
+                        <h2>Add New Admin Tool</h2>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="container-inner-a">
+                        <div class="col-lg-c-md">
+                            <div class="psg-inp"><input class="adj-c-md-sel" name="flightNumber" placeholder="Flight Number:" type="text"></div>
+                            <div class="psg-inp"><input class="adj-c-md-sel" name="destinationCode" placeholder="Destination Code:" type="text"></div>
+                            <div class="psg-inp"><input class="adj-c-md-sel" name="originCode" placeholder="Origin Code:" type="text"></div>
+
+                        </div>
+                        <div class="col-lg-c-md adj-c-md">
+                            <div class="psg-inp">
+                                <select class="adj-c-md-sel">
+                                    <option value="">Price:</option>
+                                    <option value="rt">N80,000</option>
+                                    <option value="ow">N150,000</option>
+                                    <option value="ow">N250,000</option>
+                                </select>
+                            </div>
+                            <div class="psg-inp"><input class="adj-c-md-sel" name="availableSeats" placeholder="Available Seats:" type="text"></div>
+                            <div class="psg-inp">
+                                <input class="inp-cls adj-c-md-sel" id="date3" name="date" type="date">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-b">
+                    <input class="btn" type="button" value="Create Flight">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="crud-display">
+
+
+
+        </div>
+
+
+
+
+    </div>
+</section>
+
+
+<!--<div class="feedback">Feedback</div>-->
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9k/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+
+
+<script th:src="@{/js/index.js}" ></script>
+<script src="/static/js/index.js" ></script>
+
+<script th:src="@{/js/flight-API.js}" ></script>
+<script src="/static/js/flight-API.js" ></script>
+
+</body>
+</html>
