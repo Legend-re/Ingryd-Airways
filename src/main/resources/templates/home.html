@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingryd Airways</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/home.css}">
+    <link type="text/css" rel="stylesheet" href="/static/css/home.css">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/psgStyle.css}">
+    <link type="text/css" rel="stylesheet" href="/static/css/psgStyle.css">
+
+</head>
+<body>
+<style th:inline="text">
+    .welcome-box{
+        background: url([[@{/assets/images/banner1.jpg}]]);
+        background-size: cover;
+
+    }
+</style>
+
+<section class="navbar">
+
+    <div class="header-a">
+        <div class="logo-bar">
+            <div class="hamburger">
+                <div class="line" id="ln"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="side-bar">
+                    <div class="shadow"></div>
+
+                </div>
+                <div class="non-click"></div>
+            </div>
+
+            <div class="logo"><img src="/static/assets/images/ingrydLogo2.jpg" th:src="@{/assets/images/ingrydLogo2.jpg}" /></div>
+            <h2>Airways</h2>
+        </div>
+        <div class="login-bar">
+            <div class="ico-pln"><img src="/static/assets/ico2/search.png" th:src="@{/assets/ico2/search.png}"/></div>
+            <div class="login-bar-col">
+             <ul>
+                <li class="login-sm active"><p><img src="/static/assets/ico2/avatar.png" th:src="@{/assets/ico2/avatar.png}"/>&nbsp Login</p>
+                    <div class="sub-menu">
+                        <div class="log-btn">User</div>
+
+                        <div class="log-btn">Admin</div>
+                    </div>
+                </li>
+            </ul>
+            </div>
+        </div>
+        <div class="signup-bar">
+
+            <div class="signup-sm">
+                <p><img src="/static/assets/ico2/add-user.png" th:src="@{/assets/ico2/add-user.png}"/>&nbsp Sign up </p>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="header-b">
+        <div class="header-md">
+            <div class="btn-sm">Book a flight</div>
+            <div class="btn-sm">Check-in</div>
+            <div class="btn-sm">My Bookings</div>
+            <div class="btn-sm">Information</div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="sec-two">
+
+    <div class="main">
+        <div class="welcome-box">
+            <img src="/static/assets/images/banner1.jpg" th:src="@{/assets/images/banner1.jpg}"/>
+            <!--<p>Welcome, to Ingryd Airways </p>-->
+            <div class="note"> Igryd Airways h</div>
+
+        </div>
+
+    </div>
+</section>
+<section class="sec-two-b">
+<!----------RESERVATION FORM------------------>
+    <form th:action="@{/api/create-reservation}" method="post" th:object="${reservation}">
+        <div class="fl-col-md">Book a flight</div>
+        <div class="flight-table">
+
+            <div class="col-lg-a">
+
+            <select class="col-md-s col-md-e">
+                <option value="null">---select---</option>
+                <option value="rt">Round trip</option>
+                <option value="ow">One way</option>
+                <option value="mc">Multi city</option>
+            </select>
+            <div class="col-md col-md-d">
+                <div class="ico-pln"><img src="/static/assets/ico2/take-off.png" th:src="@{/assets/ico2/take-off.png}"/></div>
+                <select id="selectElement1" name="originCode">
+
+                </select>
+            </div>
+            <div class="col-md col-md-d">
+                <div class="ico-pln"><img src="/static/assets/ico2/plane-landing.png" th:src="@{/assets/ico2/plane-landing.png}"/></div>
+                <select id="selectElement2" name="destinationCode">
+
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-b">
+            <div class="col-md-x col-md-d adj toggle-date">
+                <div class="row-md-1">
+                    <div class="ico-pln"><img src="/static/assets/ico2/calender2.png" th:src="@{/assets/ico2/calender2.png}"/></div>
+                    <div class="inp-hl">
+                        Pick Travel Dates
+                    </div>
+                </div>
+                <div class="row-md-2">
+                    <div class="inp-ln-inner">
+                        <span>From</span>
+                        <input type="date" name="dateFrom" id="date1" class="inp-cls">
+                        <span>To</span>
+                        <input type="date" name="dateTo" id="date2" class="inp-cls adj-cls">
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-x col-md-d adj toggle-date2">
+                <div class="row-md-1">
+                    <div class="ico-pln"><img src="/static/assets/ico2/group.png" th:src="@{/assets/ico2/group.png}"/></div>
+                    <div class="inp-hl2">
+                        + Number of Passengers
+                    </div>
+                </div>
+                <div class="row-md-2">
+                    <div class="inp-ln-inner2">
+                        <select class="col-md-s col-md-e adj-fill">
+                            <option value="null">---select---</option>
+                            <option value="rt">1</option>
+                            <option value="ow">2</option>
+                            <option value="mc">3</option>
+                            <option value="mc">4</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <select class="col-md-s col-md-e adj-fill">
+                <option value="null">---select---</option>
+                <option value="rt">Economy</option>
+                <option value="ow">Premium Economy</option>
+                <option value="mc">Business</option>
+            </select>
+        </div>
+        <div class="col-lg-c b-con">
+            <div class="col-lg-c-md">
+                <div class="col-lg-b">
+                    <input type="button" value="+ Add" class="add-btn" id="addBtn" onclick="addPassenger()">
+                </div>
+            </div>
+            <div class="container">
+            <!--<div class="col-lg-c-md">
+                <div class="psg-inp"><input type="text" name="firstName" placeholder="First Name:"></div>
+                <div class="psg-inp"><input type="text" name="middleName" placeholder="Last Name:"></div>
+                <div class="psg-inp"><input type="text" name="email" placeholder="Email:"></div>
+            </div>
+            <div class="col-lg-c-md adj-c-md">
+                <div class="psg-inp">
+                    <select class="adj-c-md-sel">
+                        <option value="null">Gender:</option>
+                        <option value="rt">Male</option>
+                        <option value="ow">Female Economy</option>
+                    </select>
+                </div>
+                <div class="psg-inp"><input type="text" name="address" placeholder="Address:"></div>
+                <div class="psg-inp">
+                    <input type="date" name="date" id="date3" class="inp-cls adj-c-md-sel">
+                </div>
+
+            </div>-->
+            </div>
+
+            <div class="col-lg-c-md more">
+
+            </div>
+
+        </div>
+            <div class="col-lg-b">
+                <input type="submit" value="Search Flight" class="btn">
+            </div>
+     </div>
+
+</form>
+    <!----------RESERVATION FORM END------------------>
+</section>
+
+<section class="sec-three">
+    <div class="col-3-md">
+        <div class="destination-tab">Destination and deals</div>
+        <div class="flight">
+            <div class="fl-btn-con">
+                <div class="fl-btn-a active-fl">Flights</div>
+                <div class="fl-btn-b fl-adj-b">Promo rewards</div><br><br>
+            </div>
+            <div class="fl-txt">
+                Discover our best deals in the Economy cabin on flights departing from
+
+                Lagos, Lagos (LOS)
+
+            </div>
+
+            <div class="fl-bullet">
+                <div class="fl-col-1">
+                    <div class="fl-md-1">
+                        <img src="/static/assets/images/CITY-BCN-1.jpeg" th:src="@{/assets/images/CITY-BCN-1.jpeg}"/>
+                    </div>
+                    <div class="fl-md-2">
+                        <span class="bold">Frankfurt</span><br><br>
+                        <span class="fl-txt">(Germany) </span>
+                    </div>
+                </div>
+                <div class="fl-col-2"><span class="bold">From</span></div>
+                <div class="fl-col-3">
+                    <img src="/static/assets/ico2/arrows.png" th:src="@{/assets/ico2/arrows.png}"/>
+                    <span class="fl-txt">Round trip</span></div>
+                <div class="fl-col-4">
+                    <img src="/static/assets/ico2/info.png" th:src="@{/assets/ico2/info.png}"/>
+                </div>
+
+            </div>
+            <div class="fl-bullet mv">
+                <div class="fl-col-1">
+                    <div class="fl-md-1">
+                        <img src="/static/assets/images/CITY-ZRH-1.jpeg" th:src="@{/assets/images/CITY-ZRH-1.jpeg}"/>
+                    </div>
+                    <div class="fl-md-2">
+                        <span class="bold">Barcelona</span><br><br>
+                        <span class="fl-txt">(Spain) </span>
+                    </div>
+                </div>
+                <div class="fl-col-2"><span class="bold">From</span></div>
+                <div class="fl-col-3">
+                    <img src="/static/assets/ico2/arrows.png" th:src="@{/assets/ico2/arrows.png}"/>
+                    <span class="fl-txt">Round trip</span></div>
+                <div class="fl-col-4">
+                    <img src="/static/assets/ico2/info.png" th:src="@{/assets/ico2/info.png}"/>
+                </div>
+            </div>
+            <div class="fl-bullet mv-2">
+                <div class="fl-col-1">
+                    <div class="fl-md-1">
+                        <img src="/static/assets/images/paris.jpeg" th:src="@{/assets/images/paris.jpeg}"/>
+                    </div>
+                    <div class="fl-md-2">
+                        <span class="bold">Paris</span><br><br>
+                        <span class="fl-txt">(France) </span>
+                    </div>
+                </div>
+                <div class="fl-col-2"><span class="bold">From</span></div>
+                <div class="fl-col-3">
+                    <img src="/static/assets/ico2/arrows.png" th:src="@{/assets/ico2/arrows.png}"/>
+                    <span class="fl-txt">Round trip</span></div>
+                <div class="fl-col-4">
+                    <img src="/static/assets/ico2/info.png" th:src="@{/assets/ico2/info.png}"/>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<section class="sec-four">
+    <div class="ico-pln-x cancel"><img onclick="window.location.reload()" src="/static/assets/ico2/cancel.png" th:src="@{/assets/ico2/cancel.png}"/></div>
+    <div class="admin-page">
+        <div class="adm-lg">Admin login</div>
+        <div class="login-form">
+            <form th:action="@{/api/admin-login}" method="post">
+
+                <div class="ico-pln"><img src="/static/assets/ico2/admin-panel.png" th:src="@{/assets/ico2/admin-panel.png}"/></div>
+                <input type="text" name="email" placeholder="email" required class="inp"><br><br>
+
+                <div class="ico-pln"><img src="/static/assets/ico2/security-lock.png" th:src="@{/assets/ico2/security-lock.png}"/></div>
+                <input type="text" name="password" placeholder="password" required class="inp"><br><br>
+                <input type="submit" value="Login" class="btn">
+                <!--<a class="btn" href="create_flight.html">Login</a>-->
+                <button type="submit" class="finger-print"> </button><br><br>
+
+            </form>
+        </div>
+    </div>
+</section>
+
+<div class="feedback">Feedback</div>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9k/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+
+
+<script th:src="@{/js/index.js}" type="application/javascript"></script>
+<script src="/static/js/index.js" type="application/javascript"></script>
+
+<script th:src="@{/js/flight-API.js}" type="application/javascript"></script>
+<script src="/static/js/flight-API.js" type="application/javascript"></script>
+
+</body>
+</html>
