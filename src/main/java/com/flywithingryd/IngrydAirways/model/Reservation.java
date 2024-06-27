@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.Objects;
 
 @Entity(name = "reservation")
@@ -20,27 +20,28 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     private Flight flight;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Passenger> passenger;
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Passenger> passengers;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date departureTime;
+
     private Timestamp timestamp;
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
     @Transient
     private Itinerary itineraryId;
 
     public Reservation(){};
 
-    public Reservation(int id, String reservationNumber, Flight flight, List<Passenger> passenger, Date departureTime, Timestamp timestamp, ReservationStatus status) {
+    public Reservation(int id, String reservationNumber, Flight flight, Set<Passenger> passengers, Date departureTime, Timestamp timestamp, ReservationStatus status) {
         this.id = id;
         this.flight = flight;
         this.reservationNumber = reservationNumber;
-        this.passenger = passenger;
+        this.passengers = passengers;
         this.departureTime = departureTime;
         this.timestamp = timestamp;
         this.status = status;
@@ -55,8 +56,8 @@ public class Reservation {
     public Flight getFlight() {
         return flight;
     }
-    public List<Passenger> getPassenger(){
-        return passenger;
+    public Set<Passenger> getPassengers(){
+        return passengers;
     }
     public Date getDepartureTime() {
         return departureTime;
@@ -83,8 +84,8 @@ public class Reservation {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-    public void setPassenger(List<Passenger> passenger){
-        this.passenger = passenger;
+    public void setPassengers(Set<Passenger> passengers){
+        this.passengers = passengers;
     }
     public ReservationStatus setStatus(ReservationStatus status){
         return  this.status = status;
@@ -99,7 +100,7 @@ public class Reservation {
                 "id=" + id +
                 ", reservationNumber='" + reservationNumber + '\'' +
                 ", flight=" + flight +
-                ", passenger=" + passenger +
+                ", passenger=" + passengers +
                 ", departureTime=" + departureTime +
                 ", timestamp=" + timestamp +
                 ", status=" + status +

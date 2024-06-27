@@ -17,6 +17,7 @@ import com.flywithingryd.IngrydAirways.model.enums.Gender;
 import com.flywithingryd.IngrydAirways.model.enums.Role;
 import com.flywithingryd.IngrydAirways.repository.UserRepository;
 
+import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -51,7 +52,7 @@ class UserServiceTest {
     }
 
     @Test
-    void registerUser_Success() {
+    void registerUser_Success() throws MessagingException {
         UserRequest userRequest = new UserRequest();
         userRequest.setFirstName("John");
         userRequest.setLastName("Doe");

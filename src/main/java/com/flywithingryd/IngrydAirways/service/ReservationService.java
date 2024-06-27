@@ -1,9 +1,14 @@
 package com.flywithingryd.IngrydAirways.service;
 
+import com.flywithingryd.IngrydAirways.dto.CreateItineraryDTO;
+import com.flywithingryd.IngrydAirways.dto.request.ReservationRequest;
+import com.flywithingryd.IngrydAirways.exception.FlightNotFoundException;
 import com.flywithingryd.IngrydAirways.exception.ReservationNotFoundException;
+import com.flywithingryd.IngrydAirways.model.Flight;
 import com.flywithingryd.IngrydAirways.model.Passenger;
 import com.flywithingryd.IngrydAirways.model.Reservation;
 import com.flywithingryd.IngrydAirways.model.enums.ReservationStatus;
+import com.flywithingryd.IngrydAirways.repository.FlightRepository;
 import com.flywithingryd.IngrydAirways.repository.ReservationRepository;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
@@ -19,34 +24,41 @@ public class ReservationService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
     private final ReservationRepository reservationRepository;
+    private final FlightRepository flightRepository;
     private final MessageService messageService;
+    private final ItineraryService itineraryService;
 
 
-    public ReservationService(ReservationRepository reservationRepository, MessageService messageService) {
+    public ReservationService(ReservationRepository reservationRepository, FlightRepository flightRepository, MessageService messageService, ItineraryService itineraryService) {
         this.reservationRepository = reservationRepository;
+        this.flightRepository = flightRepository;
         this.messageService = messageService;
-
+        this.itineraryService = itineraryService;
     }
 
     //Reservation Logic
     @Transactional
-    public Reservation createReservation(List<Passenger> passengers) throws MessagingException {
+    public Reservation createReservation(ReservationRequest request) throws MessagingException {
+        Flight flight = flightRepository.findById(request.getFlightId())
+                .orElseThrow(() -> new FlightNotFoundException("Flight not found"));
+
         String reservationId = generateReservationId();
 
         Reservation reservation = new Reservation();
         reservation.setReservationNumber(reservationId);
 
 
-        List<Passenger> savedPassengers = new ArrayList<>();
-        for (Passenger passenger : passengers) {
+        Set<Passenger> savedPassengers = new HashSet<>();
+        for (Passenger passenger : request.getPassengers()) {
             String ticketId = generateTicketId();
             passenger.setTicketNumber(ticketId);
-            passenger.setReservations(reservation);
+            passenger.setReservation(reservation);
             savedPassengers.add(passenger);
         }
 
 
-        reservation.setPassenger(savedPassengers);
+        reservation.setPassengers(savedPassengers);
+        reservation.setFlight(flight);
         reservation.setStatus(ReservationStatus.PENDING);
 
 
@@ -57,6 +69,8 @@ public class ReservationService {
             String firstName = passenger.getFirstName();
             messageService.reservationNotification(firstName, email, reservationId, reservation.getStatus().toString());
         }
+
+        itineraryService.createItinerary(reservationId);
 
         return savedReservation;
     }

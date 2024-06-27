@@ -117,7 +117,6 @@ public class Aircraft {
     }
 
     @OneToOne(mappedBy = "aircraft")
-    @JoinColumn(name = "flight_id", nullable = false)
     @JsonBackReference
     private Flight flight;
 

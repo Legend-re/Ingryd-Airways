@@ -1,6 +1,7 @@
 package com.flywithingryd.IngrydAirways.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flywithingryd.IngrydAirways.model.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -8,7 +9,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,13 +26,13 @@ public class Passenger {
     private String lastName;
 
     @Email
-    @Column(unique = true)
     private String email;
 
     private Date dob;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
     @Column(unique = true, nullable = false)
     private String ticketNumber;
 
@@ -40,7 +40,9 @@ public class Passenger {
     private Gender gender;
 
     @ManyToOne
-    private Reservation reservations;
+    @JoinColumn(name = "reservation_id", nullable = false)
+    @JsonIgnore
+    private Reservation reservation;
 
     public Passenger(){};
 
@@ -109,12 +111,12 @@ public class Passenger {
         this.gender = gender;
     }
 
-    public Reservation getReservations() {
-        return reservations;
+    public Reservation getReservation() {
+        return reservation;
     }
 
-    public void setReservations(Reservation reservations) {
-        this.reservations = reservations;
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     public void setEmail(@Email String email) {

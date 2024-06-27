@@ -1,5 +1,6 @@
 package com.flywithingryd.IngrydAirways.controller.rest;
 
+import com.flywithingryd.IngrydAirways.dto.request.ReservationRequest;
 import com.flywithingryd.IngrydAirways.model.Passenger;
 import com.flywithingryd.IngrydAirways.model.Reservation;
 import com.flywithingryd.IngrydAirways.service.ReservationService;
@@ -25,9 +26,9 @@ public class ReservationRestController {
         this.reservationService = reservationService;
     }
 
-    @PostMapping("/created")
-    private ResponseEntity<Reservation> saveReservation(@RequestBody List<Passenger> passengers) throws MessagingException {
-        return ResponseEntity.ok(reservationService.createReservation(passengers));
+    @PostMapping("/make-reservation")
+    private ResponseEntity<Reservation> saveReservation(@RequestBody ReservationRequest request) throws MessagingException {
+        return ResponseEntity.ok(reservationService.createReservation(request));
     }
 
     @GetMapping("/get-reservation")

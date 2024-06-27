@@ -29,8 +29,8 @@ public class ItineraryRestController {
     @ApiResponse(responseCode = "201", description = "Itinerary created",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ItineraryDTO.class)))
-    public ResponseEntity<ItineraryDTO> createItinerary(@Validated @RequestBody CreateItineraryDTO createItineraryDTO) {
-        ItineraryDTO itineraryDTO = itineraryService.createItinerary(createItineraryDTO);
+    public ResponseEntity<ItineraryDTO> createItinerary(@Validated @RequestParam String request) {
+        ItineraryDTO itineraryDTO = itineraryService.createItinerary(request);
         return new ResponseEntity<>(itineraryDTO, HttpStatus.CREATED);
     }
 
