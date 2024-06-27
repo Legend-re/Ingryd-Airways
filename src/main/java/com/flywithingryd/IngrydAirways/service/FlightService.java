@@ -48,22 +48,20 @@ public class FlightService {
         this.aircraftRepository = aircraftRepository;
     }
 
-//    @Cacheable(cacheNames = "flights", key = "#request.origin + #request.destination + #request.departureDate + #pageable.pageNumber + #pageable.pageSize")
-//    public Page<FlightSearchResponse> searchFlights(FlightSearchRequest request, Pageable pageable) throws FlightNotFoundException {
-//        Page<Flight> flights = flightRepository.findAll(FlightSpecifications.searchFlights(request), pageable);
-//
-//        if (flights.isEmpty()) {
-//            throw new FlightNotFoundException("No flights found for your search criteria.");
-//        }
-//
-//        List<FlightSearchResponse> responseList = flights.stream()
-//                .map(this::mapToResponse)
-//                .collect(Collectors.toList());
-//
-//        return new PageImpl<>(responseList, pageable, flights.getTotalElements());
-//    }
+    //@Cacheable(cacheNames = "flights", key = "#request.origin + #request.destination + #request.departureDate + #pageable.pageNumber + #pageable.pageSize")
+    public List<FlightSearchResponse> searchFlights(String origin) throws FlightNotFoundException {
+        List<Flight> flights = flightRepository.findByOriginCode(origin);
 
-    public List<Flight> searchFlightByOrigin(Double origin) throws FlightNotFoundException{
+        if (flights.isEmpty()) {
+            throw new FlightNotFoundException("No flights found for your search criteria.");
+        }
+
+        return flights.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+/*    public List<Flight> searchFlightByOrigin(Double origin) throws FlightNotFoundException{
         try {
 //            Pageable pageable = PageRequest.of(pageIndex, pageSize);
 //            Page<Flight> flights = flightRepository.findByOriginCode(origin, pageable);
@@ -78,7 +76,7 @@ public class FlightService {
         } finally {
             logger.info("done processing list Flight request");
         }
-    }
+    }*/
 
     String generateFlightNumber() {
         StringBuilder flightNumber = new StringBuilder(PREFIX);
@@ -173,7 +171,6 @@ public class FlightService {
                 flight.getDepartureTime(),
                 flight.getPrice(),
                 flight.getAvailableSeats(),
-                flight.getTravelClass().toString(),
                 airportService.getAirportName(flight.getOriginCode()),
                 airportService.getAirportName(flight.getDestinationCode())
         );

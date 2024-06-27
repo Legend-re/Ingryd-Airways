@@ -17,7 +17,6 @@ public class FlightSearchResponse {
     private LocalDateTime departureTime;
     private double price;
     private int availableSeats;
-    private String travelClass;
     private String originAirportName;
     private String destinationAirportName;
 }

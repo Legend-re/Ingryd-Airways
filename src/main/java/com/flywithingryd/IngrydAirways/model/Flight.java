@@ -1,6 +1,7 @@
 package com.flywithingryd.IngrydAirways.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.flywithingryd.IngrydAirways.model.enums.FlightStatus;
 import com.flywithingryd.IngrydAirways.model.enums.SeatClass;
 import jakarta.persistence.*;
@@ -44,6 +45,7 @@ public class Flight {
     private FlightStatus status;
 
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private Aircraft aircraft;
 
     @Enumerated(EnumType.STRING)
@@ -66,6 +68,14 @@ public class Flight {
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Reservation> reservation;
+
+    public void setItineraryList(List<Itinerary> itineraryList) {
+        this.itineraryList = itineraryList;
+    }
+
+    public List<Itinerary> getItineraryList() {
+        return itineraryList;
+    }
 
     public Flight(String flightNumber, String destinationCode, String originCode,
                   LocalDateTime departureTime, LocalDateTime arrivalTime,
@@ -201,7 +211,6 @@ public class Flight {
                 ", departureTime=" + departureTime +
                 ", arrivalTime=" + arrivalTime +
                 ", status=" + status +
-                ", aircraft=" + aircraft +
                 ", travelClass=" + travelClass +
                 ", availableSeats=" + availableSeats +
                 ", price=" + price +
