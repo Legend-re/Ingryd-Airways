@@ -1,5 +1,6 @@
 package com.flywithingryd.IngrydAirways.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +22,7 @@ public class Address {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public Address(String city, String country, String state, String streetAddress, String zipCode) {

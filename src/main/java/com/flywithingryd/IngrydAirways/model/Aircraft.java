@@ -1,5 +1,7 @@
 package com.flywithingryd.IngrydAirways.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.flywithingryd.IngrydAirways.model.enums.AircraftStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -28,6 +30,7 @@ public class Aircraft {
     private AircraftStatus status;
 
     @NotNull
+    @Min(150)
     private int seatCapacity;
 
     @NotNull
@@ -113,7 +116,8 @@ public class Aircraft {
     }
 
     @OneToOne(mappedBy = "aircraft")
-//    @OneToOne(mappedBy = "aircraft", optional = false)
+    @JoinColumn(name = "flight_id", nullable = false)
+    @JsonIgnore
     private Flight flight;
 
     public Flight getFlight() {

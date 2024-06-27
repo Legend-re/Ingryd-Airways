@@ -17,7 +17,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class AircraftService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AircraftService.class);
 
     private static final String PREFIX = "GRYD";
     private static final Integer BUSINESS_CLASS_SEATS = 50;
