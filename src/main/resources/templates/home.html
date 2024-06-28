@@ -39,15 +39,15 @@
         <div class="login-bar">
             <div class="ico-pln"><img src="/static/assets/ico2/search.png" th:src="@{/assets/ico2/search.png}"/></div>
             <div class="login-bar-col">
-             <ul>
-                <li class="login-sm active"><p><img src="/static/assets/ico2/avatar.png" th:src="@{/assets/ico2/avatar.png}"/>&nbsp Login</p>
-                    <div class="sub-menu">
-                        <div class="log-btn">User</div>
+                <ul>
+                    <li class="login-sm active"><p><img src="/static/assets/ico2/avatar.png" th:src="@{/assets/ico2/avatar.png}"/>&nbsp Login</p>
+                        <div class="sub-menu">
+                            <div class="log-btn">User</div>
 
-                        <div class="log-btn">Admin</div>
-                    </div>
-                </li>
-            </ul>
+                            <div class="log-btn">Admin</div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="signup-bar">
@@ -75,126 +75,125 @@
 
     <div class="main">
         <div class="welcome-box">
+
             <img src="/static/assets/images/banner1.jpg" th:src="@{/assets/images/banner1.jpg}"/>
             <!--<p>Welcome, to Ingryd Airways </p>-->
-            <div class="note"> Igryd Airways h</div>
+
 
         </div>
-
+        <div class="note"> Ingryd Airways celebrates 3-Years of impeccable flight experience. Enjoy great flight offers with us. Fly with safety..</div>
     </div>
 </section>
 <section class="sec-two-b">
-<!----------RESERVATION FORM------------------>
+    <!----------RESERVATION FORM------------------>
     <form th:action="@{/api/create-reservation}" method="post" th:object="${reservation}">
         <div class="fl-col-md">Book a flight</div>
         <div class="flight-table">
 
             <div class="col-lg-a">
 
-            <select class="col-md-s col-md-e">
-                <option value="null">---select---</option>
-                <option value="rt">Round trip</option>
-                <option value="ow">One way</option>
-                <option value="mc">Multi city</option>
-            </select>
-            <div class="col-md col-md-d">
-                <div class="ico-pln"><img src="/static/assets/ico2/take-off.png" th:src="@{/assets/ico2/take-off.png}"/></div>
-                <select id="selectElement1" name="originCode">
-
+                <select class="col-md-s col-md-e">
+                    <option value="null">---select---</option>
+                    <option value="rt">Round trip</option>
+                    <option value="ow">One way</option>
+                    <option value="mc">Multi city</option>
                 </select>
-            </div>
-            <div class="col-md col-md-d">
-                <div class="ico-pln"><img src="/static/assets/ico2/plane-landing.png" th:src="@{/assets/ico2/plane-landing.png}"/></div>
-                <select id="selectElement2" name="destinationCode">
+                <div class="col-md col-md-d">
+                    <div class="ico-pln"><img src="/static/assets/ico2/take-off.png" th:src="@{/assets/ico2/take-off.png}"/></div>
+                    <div class="psg-inp"><input class="adj-c-md-sel wd" name="originCode" placeholder="Enter Origin Number" type="text"></div>
+                </div>
+                <div class="col-md col-md-d">
+                    <div class="ico-pln"><img src="/static/assets/ico2/plane-landing.png" th:src="@{/assets/ico2/plane-landing.png}"/></div>
+                    <select id="selectElement2" name="destinationCode">
 
-                </select>
-            </div>
-        </div>
-        <div class="col-lg-b">
-            <div class="col-md-x col-md-d adj toggle-date">
-                <div class="row-md-1">
-                    <div class="ico-pln"><img src="/static/assets/ico2/calender2.png" th:src="@{/assets/ico2/calender2.png}"/></div>
-                    <div class="inp-hl">
-                        Pick Travel Dates
-                    </div>
-                </div>
-                <div class="row-md-2">
-                    <div class="inp-ln-inner">
-                        <span>From</span>
-                        <input type="date" name="dateFrom" id="date1" class="inp-cls">
-                        <span>To</span>
-                        <input type="date" name="dateTo" id="date2" class="inp-cls adj-cls">
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-x col-md-d adj toggle-date2">
-                <div class="row-md-1">
-                    <div class="ico-pln"><img src="/static/assets/ico2/group.png" th:src="@{/assets/ico2/group.png}"/></div>
-                    <div class="inp-hl2">
-                        + Number of Passengers
-                    </div>
-                </div>
-                <div class="row-md-2">
-                    <div class="inp-ln-inner2">
-                        <select class="col-md-s col-md-e adj-fill">
-                            <option value="null">---select---</option>
-                            <option value="rt">1</option>
-                            <option value="ow">2</option>
-                            <option value="mc">3</option>
-                            <option value="mc">4</option>
-                        </select>
-                    </div>
-                </div>
-
-            </div>
-
-            <select class="col-md-s col-md-e adj-fill">
-                <option value="null">---select---</option>
-                <option value="rt">Economy</option>
-                <option value="ow">Premium Economy</option>
-                <option value="mc">Business</option>
-            </select>
-        </div>
-        <div class="col-lg-c b-con">
-            <div class="col-lg-c-md">
-                <div class="col-lg-b">
-                    <input type="button" value="+ Add" class="add-btn" id="addBtn" onclick="addPassenger()">
-                </div>
-            </div>
-            <div class="container">
-            <!--<div class="col-lg-c-md">
-                <div class="psg-inp"><input type="text" name="firstName" placeholder="First Name:"></div>
-                <div class="psg-inp"><input type="text" name="middleName" placeholder="Last Name:"></div>
-                <div class="psg-inp"><input type="text" name="email" placeholder="Email:"></div>
-            </div>
-            <div class="col-lg-c-md adj-c-md">
-                <div class="psg-inp">
-                    <select class="adj-c-md-sel">
-                        <option value="null">Gender:</option>
-                        <option value="rt">Male</option>
-                        <option value="ow">Female Economy</option>
                     </select>
                 </div>
-                <div class="psg-inp"><input type="text" name="address" placeholder="Address:"></div>
-                <div class="psg-inp">
-                    <input type="date" name="date" id="date3" class="inp-cls adj-c-md-sel">
+            </div>
+            <div class="col-lg-b">
+                <div class="col-md-x col-md-d adj toggle-date">
+                    <div class="row-md-1">
+                        <div class="ico-pln"><img src="/static/assets/ico2/calender2.png" th:src="@{/assets/ico2/calender2.png}"/></div>
+                        <div class="inp-hl">
+                            Pick Travel Dates
+                        </div>
+                    </div>
+                    <div class="row-md-2">
+                        <div class="inp-ln-inner">
+                            <span>From</span>
+                            <input type="date" name="dateFrom" id="date1" class="inp-cls">
+                            <span>To</span>
+                            <input type="date" name="dateTo" id="date2" class="inp-cls adj-cls">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-x col-md-d adj toggle-date2">
+                    <div class="row-md-1">
+                        <div class="ico-pln"><img src="/static/assets/ico2/group.png" th:src="@{/assets/ico2/group.png}"/></div>
+                        <div class="inp-hl2">
+                            + Number of Passengers
+                        </div>
+                    </div>
+                    <div class="row-md-2">
+                        <div class="inp-ln-inner2">
+                            <select class="col-md-s col-md-e adj-fill">
+                                <option value="null">---select---</option>
+                                <option value="rt">1</option>
+                                <option value="ow">2</option>
+                                <option value="mc">3</option>
+                                <option value="mc">4</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
 
-            </div>-->
+                <select class="col-md-s col-md-e adj-fill">
+                    <option value="null">---select---</option>
+                    <option value="rt">Economy</option>
+                    <option value="ow">Premium Economy</option>
+                    <option value="mc">Business</option>
+                </select>
             </div>
+            <div class="col-lg-c b-con">
+                <div class="col-lg-c-md">
+                    <div class="col-lg-b">
+                        <input type="button" value="+ Add" class="add-btn" id="addBtn" onclick="addPassenger()">
+                    </div>
+                </div>
+                <div class="container">
+                    <!--<div class="col-lg-c-md">
+                        <div class="psg-inp"><input type="text" name="firstName" placeholder="First Name:"></div>
+                        <div class="psg-inp"><input type="text" name="middleName" placeholder="Last Name:"></div>
+                        <div class="psg-inp"><input type="text" name="email" placeholder="Email:"></div>
+                    </div>
+                    <div class="col-lg-c-md adj-c-md">
+                        <div class="psg-inp">
+                            <select class="adj-c-md-sel">
+                                <option value="null">Gender:</option>
+                                <option value="rt">Male</option>
+                                <option value="ow">Female Economy</option>
+                            </select>
+                        </div>
+                        <div class="psg-inp"><input type="text" name="address" placeholder="Address:"></div>
+                        <div class="psg-inp">
+                            <input type="date" name="date" id="date3" class="inp-cls adj-c-md-sel">
+                        </div>
 
-            <div class="col-lg-c-md more">
+                    </div>-->
+                </div>
+
+                <div class="col-lg-c-md more">
+
+                </div>
 
             </div>
-
-        </div>
             <div class="col-lg-b">
                 <input type="submit" value="Search Flight" class="btn">
             </div>
-     </div>
+        </div>
 
-</form>
+    </form>
     <!----------RESERVATION FORM END------------------>
 </section>
 
