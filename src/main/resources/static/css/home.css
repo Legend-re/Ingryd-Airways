@@ -387,6 +387,27 @@ body{
     padding: 20px;
 }
 
+.main .note{
+    width: 300px;
+    height: 150px;
+    border: 0px solid #fff;
+    z-index: 100;
+    position: relative;
+    top: -280px;
+    left: 900px;
+    background: red;
+    border-radius: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8)50%, rgba(0,0,0,0.8)50%);
+    color: #fff;
+    font-size: 22px;
+    padding: 10px;
+    box-shadow: 0 0 12px #ccc;
+    font-family: helvetica;
+    text-align: center;
+
+
+}
+
 .sec-two{
     width: 100%;
     margin-left: 0px;
@@ -563,7 +584,9 @@ body{
     outline: none;
 
 }
-
+.wd{
+    width: 180%;
+}
 .adj-c-md-sel {
     color: grey;
 }
