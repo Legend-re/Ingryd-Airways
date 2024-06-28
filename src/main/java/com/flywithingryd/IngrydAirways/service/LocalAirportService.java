@@ -11,7 +11,8 @@ public class LocalAirportService {
     private final Map<String, String> airportData = Map.of(
             "JFK", "John F. Kennedy International Airport",
             "LAX", "Los Angeles International Airport",
-            "ORD", "O'Hare International Airport"
+            "ORD", "O'Hare International Airport",
+            "LOS", "Muritala Muhammed Airport"
     );
 
     public String getAirportName(String code) {

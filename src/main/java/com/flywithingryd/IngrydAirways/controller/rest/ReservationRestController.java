@@ -1,8 +1,10 @@
 package com.flywithingryd.IngrydAirways.controller.rest;
 
+import com.flywithingryd.IngrydAirways.dto.request.ReservationRequest;
 import com.flywithingryd.IngrydAirways.model.Passenger;
 import com.flywithingryd.IngrydAirways.model.Reservation;
 import com.flywithingryd.IngrydAirways.service.ReservationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.RESERVATIO
 
 @RestController
 @RequestMapping(RESERVATION_CONTROLLER_ENDPOINT)
+@Tag(name = "Reservation Management", description = "API for booking and managing Reservations")
 public class ReservationRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationRestController.class);
@@ -25,9 +28,9 @@ public class ReservationRestController {
         this.reservationService = reservationService;
     }
 
-    @PostMapping("/created")
-    private ResponseEntity<Reservation> saveReservation(@RequestBody List<Passenger> passengers) throws MessagingException {
-        return ResponseEntity.ok(reservationService.createReservation(passengers));
+    @PostMapping("/make-reservation")
+    private ResponseEntity<Reservation> saveReservation(@RequestBody ReservationRequest request) throws MessagingException {
+        return ResponseEntity.ok(reservationService.createReservation(request));
     }
 
     @GetMapping("/get-reservation")
@@ -40,10 +43,8 @@ public class ReservationRestController {
         return ResponseEntity.ok(reservationService.findAllFlights());
     }
     @PatchMapping("/cancel-reservation/{reservationNumber}")
-    public ResponseEntity<Void> cancelReservationByReservationNum(@PathVariable String reservationNumber, Reservation user){
-        logger.info("Cancelling Reservation, please wait... {}", reservationNumber);
-        reservationService.cancelReservationByReservationNum(reservationNumber, user);
-        logger.info("Your Reservation is now Canceled {}", reservationNumber);
+    public ResponseEntity<Void> cancelReservationByReservationNum(@PathVariable String reservationNumber){
+        reservationService.cancelReservationByReservationNum(reservationNumber);
         return ResponseEntity.noContent().build();
 
     }

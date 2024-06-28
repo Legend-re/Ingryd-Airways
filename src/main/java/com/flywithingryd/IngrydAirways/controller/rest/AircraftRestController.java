@@ -86,7 +86,7 @@ public class AircraftRestController {
     })
     public ResponseEntity<Void> changeAircraftStatus(
             @Parameter(description = "Aircraft Registration Number", required = true) @PathVariable String regNumber,
-            @Parameter(description = "Update aircraft status", required = true) @RequestParam String status) {
+            @Parameter(description = "Update aircraft status", required = true) @RequestParam AircraftStatus status) {
         aircraftService.toggleAircraftStatus(regNumber, status);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

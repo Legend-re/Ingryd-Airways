@@ -1,6 +1,6 @@
 package com.flywithingryd.IngrydAirways.controllerMVC;
 
-import com.flywithingryd.IngrydAirways.controllerMVC.wrapper.ReservationRequest;
+import com.flywithingryd.IngrydAirways.dto.request.ReservationRequest;
 import com.flywithingryd.IngrydAirways.model.Passenger;
 import com.flywithingryd.IngrydAirways.model.Reservation;
 import com.flywithingryd.IngrydAirways.service.ReservationService;
@@ -33,7 +33,7 @@ public class ReservationControllerMVC {
 
     @PostMapping("/create-reservation")
     public String createReservation(@ModelAttribute ReservationRequest request) throws MessagingException {
-        reservationService.createReservation(request.getPassengers(), request.getDestinationCode(), request.getOriginCode());
+        reservationService.createReservation(request);
         return "redirect:/api/reservation-created";
     }
 

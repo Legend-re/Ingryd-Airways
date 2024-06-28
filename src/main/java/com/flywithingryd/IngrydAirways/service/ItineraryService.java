@@ -14,6 +14,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class ItineraryService {
@@ -26,10 +28,10 @@ public class ItineraryService {
     }
 
     @CachePut(value = "itineraries", key = "#result.id")
-    public ItineraryDTO createItinerary(CreateItineraryDTO createItineraryDTO) {
-        Reservation reservation = reservationRepository.findByReservationNumber(createItineraryDTO.getReservationNumber());
+    public ItineraryDTO createItinerary(String reservationNumber) {
+        Reservation reservation = reservationRepository.findByReservationNumber(reservationNumber);
         if (reservation == null) {
-            throw new ReservationNotFoundException("Reservation not found for number: " + createItineraryDTO.getReservationNumber());
+            throw new ReservationNotFoundException("Reservation not found for number: " + reservationNumber);
         }
         Itinerary itinerary = new Itinerary(reservation);
         Itinerary savedItinerary = itineraryRepository.save(itinerary);
