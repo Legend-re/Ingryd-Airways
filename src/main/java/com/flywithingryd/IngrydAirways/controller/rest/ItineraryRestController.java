@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.flywithingryd.IngrydAirways.dto.CreateItineraryDTO;
 import com.flywithingryd.IngrydAirways.dto.ItineraryDTO;
 import com.flywithingryd.IngrydAirways.service.ItineraryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.ITINERARY_
 
 @RestController
 @RequestMapping(ITINERARY_CONTROLLER_ENDPOINT)
+@Tag(name = "Itinerary Management", description = "API for managing Itinerary")
 public class ItineraryRestController {
     private final ItineraryService itineraryService;
 
@@ -24,15 +26,6 @@ public class ItineraryRestController {
         this.itineraryService = itineraryService;
     }
 
-    @PostMapping
-    @Operation(summary = "Create a new itinerary")
-    @ApiResponse(responseCode = "201", description = "Itinerary created",
-            content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ItineraryDTO.class)))
-    public ResponseEntity<ItineraryDTO> createItinerary(@Validated @RequestParam String request) {
-        ItineraryDTO itineraryDTO = itineraryService.createItinerary(request);
-        return new ResponseEntity<>(itineraryDTO, HttpStatus.CREATED);
-    }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get itinerary by ID")
@@ -71,6 +64,21 @@ public class ItineraryRestController {
         return ResponseEntity.noContent().build();
     }
 }
+
+
+
+//    @PostMapping
+//    @Operation(summary = "Create a new itinerary")
+//    @ApiResponse(responseCode = "201", description = "Itinerary created",
+//            content = @Content(mediaType = "application/json",
+//                    schema = @Schema(implementation = ItineraryDTO.class)))
+//    public ResponseEntity<ItineraryDTO> createItinerary(@Validated @RequestParam String request) {
+//        ItineraryDTO itineraryDTO = itineraryService.createItinerary(request);
+//        return new ResponseEntity<>(itineraryDTO, HttpStatus.CREATED);
+//    }
+
+
+
 
 
 //@RestController

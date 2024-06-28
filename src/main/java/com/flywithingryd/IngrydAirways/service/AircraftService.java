@@ -66,11 +66,11 @@ public class AircraftService {
         return  aircraftRepository.findAll();
     }
 
-    public void toggleAircraftStatus(String regNumber, String status){
+    public void toggleAircraftStatus(String regNumber, AircraftStatus status){
         logger.info("Processing change Aircraft Status");
 
         Aircraft findAircraft = getAircraft(regNumber);
-        findAircraft.setStatus(AircraftStatus.valueOf(status));
+        findAircraft.setStatus(status);
         aircraftRepository.save(findAircraft);
         logger.info("Successfully changed Aircraft Status");
     }

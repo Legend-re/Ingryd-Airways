@@ -4,6 +4,7 @@ import com.flywithingryd.IngrydAirways.dto.request.ReservationRequest;
 import com.flywithingryd.IngrydAirways.model.Passenger;
 import com.flywithingryd.IngrydAirways.model.Reservation;
 import com.flywithingryd.IngrydAirways.service.ReservationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import static com.flywithingryd.IngrydAirways.controller.ApiEndpoints.RESERVATIO
 
 @RestController
 @RequestMapping(RESERVATION_CONTROLLER_ENDPOINT)
+@Tag(name = "Reservation Management", description = "API for booking and managing Reservations")
 public class ReservationRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationRestController.class);
@@ -41,10 +43,8 @@ public class ReservationRestController {
         return ResponseEntity.ok(reservationService.findAllFlights());
     }
     @PatchMapping("/cancel-reservation/{reservationNumber}")
-    public ResponseEntity<Void> cancelReservationByReservationNum(@PathVariable String reservationNumber, Reservation user){
-        logger.info("Cancelling Reservation, please wait... {}", reservationNumber);
-        reservationService.cancelReservationByReservationNum(reservationNumber, user);
-        logger.info("Your Reservation is now Canceled {}", reservationNumber);
+    public ResponseEntity<Void> cancelReservationByReservationNum(@PathVariable String reservationNumber){
+        reservationService.cancelReservationByReservationNum(reservationNumber);
         return ResponseEntity.noContent().build();
 
     }

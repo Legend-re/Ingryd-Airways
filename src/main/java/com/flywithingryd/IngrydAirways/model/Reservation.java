@@ -1,5 +1,6 @@
 package com.flywithingryd.IngrydAirways.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flywithingryd.IngrydAirways.model.enums.ReservationStatus;
 import jakarta.persistence.*;
 
@@ -18,6 +19,7 @@ public class Reservation {
     private String reservationNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Flight flight;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -110,7 +110,6 @@ public class ReservationService {
                 .stream().filter(f -> f.getReservationNumber().equals(reservationNum))
                 .findFirst();
         return reservation.orElseThrow(()-> new ReservationNotFoundException("Reservation Number not found:" + reservationNum));
-
     }
 
     //Find All Reservation
@@ -119,12 +118,12 @@ public class ReservationService {
     }
 
     //Cancel Reservation
-    public void cancelReservationByReservationNum(String reservationNumber, Reservation cancelReservation){
-        Reservation user = reservationRepository.findByReservationNumber(reservationNumber);
-       logger.info("Cancelling Reservation, please wait... {}", cancelReservation);
-        user.setStatus(ReservationStatus.CANCELLED);
-       logger.info("Your Reservation is now Canceled {}", cancelReservation);
-        reservationRepository.save(user);
+    public void cancelReservationByReservationNum(String reservationNumber){
+        Reservation reservation = reservationRepository.findByReservationNumber(reservationNumber);
+       logger.info("Cancelling Reservation {}, please wait...", reservationNumber);
+        reservation.setStatus(ReservationStatus.CANCELLED);
+       logger.info("Your Reservation is now Canceled {}", reservation);
+        reservationRepository.save(reservation);
     }
 
     //find ReservationByID

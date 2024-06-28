@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(USER_CONTROLLER_ENDPOINT + "/register", USER_CONTROLLER_ENDPOINT + "/login").permitAll()
-                        .requestMatchers(USER_CONTROLLER_ENDPOINT + "/registerAdmin").hasRole(ADMIN.toString())
+                        //.requestMatchers(USER_CONTROLLER_ENDPOINT + "/registerAdmin").hasRole(ADMIN.toString())
                         .requestMatchers(USER_CONTROLLER_ENDPOINT + "/**").authenticated()
                         .anyRequest().permitAll()
                 )
